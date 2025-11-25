@@ -7,26 +7,30 @@
     body { 
       font-family: Arial; 
       margin: 0; 
-      padding: 18px; 
-      background:#FFFFFF;
+      padding: 0;
+      background: transparent;
       display: flex;
       justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
+    }
+
+    .wrapper {
+      padding: 20px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
     }
 
     .card { 
       background:white; 
       padding:18px; 
-      width: 100%;
-      max-width: 200px; 
+      width: 360px;
       border-radius:12px; 
-      box-shadow:0 4px 14px rgba(128,0,128,0.35);
+      box-shadow:0 4px 20px rgba(128, 0, 128, .3); 
     }
 
     textarea { 
-      width:90%; 
-      min-height:80px; 
+      width:100%; 
+      min-height:100px; 
       padding:12px; 
       border-radius:8px;
       border:1px solid #ccc; 
@@ -53,35 +57,36 @@
   </style>
 </head>
 <body>
-  <div class="card">
-    <h3>Escribe aquí</h3>
 
-    <textarea id="campo"></textarea>
+  <div class="wrapper">
+    <div class="card">
+      <h3>Escribe aquí</h3>
 
-    <button onclick="borrar()">Borrar</button>
+      <textarea id="campo"></textarea>
 
-    <div id="msg"></div>
+      <button onclick="borrar()">Borrar</button>
+
+      <div id="msg"></div>
+    </div>
   </div>
 
   <script>
-    const KEY = "textoPagina1";
-
     // Cargar texto guardado
-    document.getElementById('campo').value = localStorage.getItem(KEY) || "";
-    document.getElementById('msg').innerText = "Texto cargado ✔";
+    document.getElementById("campo").value = 
+      localStorage.getItem("texto_pagina1") || "";
 
-    // Guardar automáticamente mientras escribe
-    document.getElementById("campo").addEventListener("input", () => {
-      localStorage.setItem(KEY, document.getElementById("campo").value);
-      document.getElementById('msg').innerText = "Guardado ✔";
+    // Guardar al escribir
+    document.getElementById("campo").addEventListener("input", function() {
+      localStorage.setItem("texto_pagina1", this.value);
+      document.getElementById("msg").innerText = "Guardado ✔";
     });
 
-    // Borrar texto
     function borrar() {
       document.getElementById("campo").value = "";
-      localStorage.removeItem(KEY);
+      localStorage.removeItem("texto_pagina1");
       document.getElementById("msg").innerText = "Texto borrado";
     }
   </script>
+
 </body>
 </html>
