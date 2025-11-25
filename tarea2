@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkbox personalizado</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+
+    label {
+      font-weight: bold; /* Texto negrito por defecto */
+      cursor: pointer;
+    }
+
+    /* Cuando el checkbox está marcado */
+    input[type="checkbox"]:checked + label {
+      color: blue;              /* Texto azul */
+      text-decoration: line-through; /* Raya encima (tachado) */
+      font-weight: normal;      /* Quitar negrito */
+    }
+  </style>
+</head>
+<body>
+  <input type="checkbox" id="tarea1">
+  <label for="tarea1">Mi texto de ejemplo</label>
+</body>
+</html>
