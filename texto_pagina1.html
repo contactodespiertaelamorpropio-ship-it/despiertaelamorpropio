@@ -4,14 +4,52 @@
   <meta charset="UTF-8" />
   <title>Campo de Escritura</title>
   <style>
-    body { font-family: Arial; margin: 0; padding: 18px; background:#f5f5f7; }
-    .card { background:white; padding:18px; margin:auto; max-width:450px;
-            border-radius:12px; box-shadow:0 4px 12px rgba(128, 0, 128); }
-    textarea { width:100%; min-height:100px; padding:12px; border-radius:8px;
-               border:1px solid #ccc; resize: vertical; font-size:15px; }
-    button { margin-top:10px; padding:8px 14px; border:0; border-radius:8px;
-             background:#FFD700; color:white; cursor:pointer; font-size:14px; }
-    #msg { margin-top:8px; color:#444; font-size:14px; }
+    body { 
+      font-family: Arial; 
+      margin: 0; 
+      padding: 18px; 
+      background:#f5f5f7; 
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .card { 
+      background:white; 
+      padding:18px; 
+      width: 90%;
+      max-width: 380px; 
+      border-radius:12px; 
+      box-shadow:0 4px 14px rgba(128,0,128,0.35);
+    }
+
+    textarea { 
+      width:100%; 
+      min-height:80px; 
+      padding:12px; 
+      border-radius:8px;
+      border:1px solid #ccc; 
+      resize: vertical; 
+      font-size:15px; 
+    }
+
+    button { 
+      margin-top:10px; 
+      padding:8px 14px; 
+      border:0; 
+      border-radius:8px;
+      background:#FFD700; 
+      color:white; 
+      cursor:pointer; 
+      font-size:14px; 
+    }
+
+    #msg { 
+      margin-top:8px; 
+      color:#444; 
+      font-size:14px; 
+    }
   </style>
 </head>
 <body>
@@ -21,30 +59,30 @@
     <textarea id="campo"></textarea>
 
     <button onclick="borrar()">Borrar</button>
+
     <div id="msg"></div>
   </div>
 
   <script>
-    const campo = document.getElementById("campo");
-    const msg = document.getElementById("msg");
+    const KEY = "textoPagina1";
 
-    // Recuperar texto guardado al cargar
-    campo.value = localStorage.getItem("texto_guardado") || "";
-    msg.innerText = "Texto cargado ✔";
+    // Cargar texto guardado
+    document.getElementById('campo').value = localStorage.getItem(KEY) || "";
+    document.getElementById('msg').innerText = "Texto cargado ✔";
 
-    // Guardar mientras se escribe
-    campo.addEventListener("input", () => {
-      localStorage.setItem("texto_guardado", campo.value);
-      msg.innerText = "Guardando...";
-      setTimeout(() => msg.innerText = "Texto guardado ✔", 400);
+    // Guardar automáticamente mientras escribe
+    document.getElementById("campo").addEventListener("input", () => {
+      localStorage.setItem(KEY, document.getElementById("campo").value);
+      document.getElementById('msg').innerText = "Guardado ✔";
     });
 
-    // Botón para borrar
+    // Borrar texto
     function borrar() {
-      campo.value = "";
-      localStorage.removeItem("texto_guardado");
-      msg.innerText = "Texto borrado";
+      document.getElementById("campo").value = "";
+      localStorage.removeItem(KEY);
+      document.getElementById("msg").innerText = "Texto borrado";
     }
   </script>
 </body>
 </html>
+
