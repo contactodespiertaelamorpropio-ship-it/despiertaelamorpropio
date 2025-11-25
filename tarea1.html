@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Checkbox personalizado</title>
+  <title>Checkbox con localStorage</title>
   <style>
     body {
       font-family: Arial;
@@ -10,20 +10,37 @@
     }
 
     label {
-      font-weight: bold; /* Texto negrito por defecto */
+      font-weight: bold;
       cursor: pointer;
     }
 
-    /* Cuando el checkbox está marcado */
     input[type="checkbox"]:checked + label {
-      color: blue;              /* Texto azul */
-      text-decoration: line-through; /* Raya encima (tachado) */
-      font-weight: normal;      /* Quitar negrito */
+      color: blue;
+      text-decoration: line-through;
+      font-weight: normal;
     }
   </style>
 </head>
 <body>
   <input type="checkbox" id="tarea1">
-  <label for="tarea1">Mi texto de ejemplo</label>
+  <label for="tarea1">Respiré conscientemente 1 minuto</label>
+   <input type="checkbox" id="tarea2">
+  <label for="tarea1">Me hablé con amabilidad</label>
+  <input type="checkbox" id="tarea2">
+  <label for="tarea1">Reconocí algo que valoré de mí hoy</label>
+
+  <script>
+    const checkbox = document.getElementById("tarea1");
+
+    // Al cargar la página, revisa si hay un valor guardado
+    if (localStorage.getItem("tarea1") === "true") {
+      checkbox.checked = true;
+    }
+
+    // Cada vez que cambie el estado, lo guarda en localStorage
+    checkbox.addEventListener("change", function() {
+      localStorage.setItem("tarea1", checkbox.checked);
+    });
+  </script>
 </body>
 </html>
