@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Campo de Escritura</title>
+  <style>
+    body { font-family: Arial; margin: 0; padding: 18px; background:#f5f5f7; }
+    .card { background:white; padding:18px; margin:auto; max-width:450px;
+            border-radius:12px; box-shadow:0 4px 12px rgba(128, 0, 128); }
+    textarea { width:100%; min-height:100px; padding:12px; border-radius:8px;
+               border:1px solid #ccc; resize: vertical; font-size:15px; }
+    button { margin-top:10px; padding:8px 14px; border:0; border-radius:8px;
+             background:#FFD700; color:white; cursor:pointer; font-size:14px; }
+    #msg { margin-top:8px; color:#444; font-size:14px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h3>Escribe aquí</h3>
+
+    <textarea id="campo"></textarea>
+
+    <button onclick="borrar()">Borrar</button>
+    <div id="msg"></div>
+  </div>
+
+  <script>
+    const campo = document.getElementById("campo");
+    const msg = document.getElementById("msg");
+
+    // Recuperar texto guardado al cargar
+    campo.value = localStorage.getItem("texto_guardado") || "";
+    msg.innerText = "Texto cargado ✔";
+
+    // Guardar mientras se escribe
+    campo.addEventListener("input", () => {
+      localStorage.setItem("texto_guardado", campo.value);
+      msg.innerText = "Guardando...";
+      setTimeout(() => msg.innerText = "Texto guardado ✔", 400);
+    });
+
+    // Botón para borrar
+    function borrar() {
+      campo.value = "";
+      localStorage.removeItem("texto_guardado");
+      msg.innerText = "Texto borrado";
+    }
+  </script>
+</body>
+</html>
