@@ -1,1 +1,63 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Checklist Página 1</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+    label {
+      font-weight: bold;
+      cursor: pointer;
+    }
+    input[type="checkbox"]:checked + label {
+      color: blue;
+      text-decoration: line-through;
+      font-weight: normal;
+    }
+  </style>
+</head>
+<body>
+  <!-- 🔧 Cambia libremente el texto y el id -->
+  <div>
+    <input type="checkbox" id="pregunta1">
+    <label for="pregunta1">Identifiqué una creencia de no merecer</label>
+  </div>
+  <div>
+    <input type="checkbox" id="pregunta2">
+    <label for="pregunta2">La cuestioné con compasión</label>
+  </div>
+  <div>
+    <input type="checkbox" id="pregunta3">
+    <label for="pregunta3">Afirmé mi derecho a recibir amor</label>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const checks = document.querySelectorAll('input[type="checkbox"]');
+
+      // 🔑 Prefijo único por página (cámbialo en cada archivo)
+      const pagePrefix = "pagina10";
+
+      checks.forEach(chk => {
+        const key = `${pagePrefix}_${chk.id}`;
+
+        // Restaura estado guardado
+        const guardado = localStorage.getItem(key);
+        if (guardado !== null) {
+          chk.checked = guardado === "true";
+        }
+
+        // Guarda cambios
+        chk.addEventListener("change", () => {
+          localStorage.setItem(key, String(chk.checked));
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+
