@@ -30,14 +30,14 @@
   <label for="tarea1">Me hablé con amabilidad</label>
 </div>
 <div>
-  <input type="checkbox" id="tarea2">
+  <input type="checkbox" id="tarea3">
   <label for="tarea1">Reconocí algo que valoré de mí hoy</label>
 </div>
   <script>
     const checkbox = document.getElementById("tarea1");
 
     // Al cargar la página, revisa si hay un valor guardado
-    if (localStorage.getItem("tarea1") === "true") {
+    if (localStorage.getItem("check1") === "true") {
       checkbox.checked = true;
     }
 
