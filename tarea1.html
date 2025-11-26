@@ -2,10 +2,10 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Checkbox con localStorage</title>
+  <title>Checklist con localStorage</title>
   <style>
     body {
-      font-family: Arial;
+      font-family: Arial, sans-serif;
       font-size: 14px;
     }
     label {
@@ -20,29 +20,47 @@
   </style>
 </head>
 <body>
+  <!-- ✅ Cambia solo el texto del label y el id del input -->
   <div>
-    <input type="checkbox" id="tarea1">
-    <label for="tarea1">Respiré conscientemente 1 minuto</label>
+    <input type="checkbox" id="autocritico">
+    <label for="autocritico">Identifiqué un pensamiento autocrítico</label>
   </div>
   <div>
-    <input type="checkbox" id="tarea2">
-    <label for="tarea2">Me hablé con amabilidad</label>
+    <input type="checkbox" id="compasivo">
+    <label for="compasivo">Lo reemplacé por uno compasivo</label>
   </div>
   <div>
-    <input type="checkbox" id="tarea3">
-    <label for="tarea3">Reconocí algo que valoré de mí hoy</label>
+    <input type="checkbox" id="bueno">
+    <label for="bueno">Nombré algo bueno que hice hoy</label>
   </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const checks = document.querySelectorAll('input[type="checkbox"]');
 
+      // 🔄 Migraciones: relaciona nuevos IDs con los antiguos (solo si cambiaste IDs)
+      const migraciones = {
+        "autocritico": "estado_tarea1",
+        "compasivo": "estado_tarea2",
+        "bueno": "estado_tarea3"
+      };
+
       checks.forEach(chk => {
         const key = `estado_${chk.id}`;
+
+        // Si existe una clave antigua, la copiamos a la nueva
+        if (migraciones[chk.id] && localStorage.getItem(migraciones[chk.id]) !== null) {
+          localStorage.setItem(key, localStorage.getItem(migraciones[chk.id]));
+          localStorage.removeItem(migraciones[chk.id]); // opcional: limpiar la vieja
+        }
+
+        // Restaura estado guardado
         const guardado = localStorage.getItem(key);
         if (guardado !== null) {
           chk.checked = guardado === "true";
         }
+
+        // Guarda cambios al marcar/desmarcar
         chk.addEventListener("change", () => {
           localStorage.setItem(key, String(chk.checked));
         });
