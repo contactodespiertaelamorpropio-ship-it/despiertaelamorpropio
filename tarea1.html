@@ -27,14 +27,16 @@
 </div>
 <div>
    <input type="checkbox" id="tarea2">
-  <label for="tarea1">Me hablé con amabilidad</label>
+  <label for="tarea2">Me hablé con amabilidad</label>
 </div>
 <div>
   <input type="checkbox" id="tarea3">
-  <label for="tarea1">Reconocí algo que valoré de mí hoy</label>
+  <label for="tarea3">Reconocí algo que valoré de mí hoy</label>
 </div>
   <script>
-    const checkbox = document.getElementById("check1");
+    const checkbox = document.getElementById("tarea1");
+    const checkbox = document.getElementById("tarea2");
+    const checkbox = document.getElementById("tarea3");
 
     // Al cargar la página, revisa si hay un valor guardado
     if (localStorage.getItem("check1") === "true") {
