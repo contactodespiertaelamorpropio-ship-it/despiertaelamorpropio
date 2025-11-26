@@ -38,7 +38,7 @@ let bar = document.getElementById("bar");
 let btn = document.getElementById("btn");
 
 // Recuperar progreso guardado
-let saved = localStorage.getItem("progresoGuardado");
+let saved = localStorage.getItem("index");
 
 if (saved == "100") {
     bar.style.width = "100%";
@@ -53,7 +53,7 @@ btn.addEventListener("click", function () {
     btn.innerHTML = "Completado ✔";
 
     // Guardar progreso en el navegador
-    localStorage.setItem("progresoGuardado", "100");
+    localStorage.setItem("index", "100");
 });
 </script>
 
