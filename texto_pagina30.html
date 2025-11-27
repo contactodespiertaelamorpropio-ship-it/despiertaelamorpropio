@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,17 +73,17 @@
   <script>
     // Cargar texto guardado
     document.getElementById("campo").value = 
-      localStorage.getItem("texto_pagina25") || "";
+      localStorage.getItem("texto_pagina30") || "";
 
     // Guardar al escribir
     document.getElementById("campo").addEventListener("input", function() {
-      localStorage.setItem("texto_pagina25", this.value);
+      localStorage.setItem("texto_pagina30", this.value);
       document.getElementById("msg").innerText = "Guardado ✔";
     });
 
     function borrar() {
       document.getElementById("campo").value = "";
-      localStorage.removeItem("texto_pagina25");
+      localStorage.removeItem("texto_pagina30");
       document.getElementById("msg").innerText = "Texto borrado";
     }
   </script>
