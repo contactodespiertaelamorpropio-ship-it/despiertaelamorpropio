@@ -1,1 +1,63 @@
 
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#container {
+    width: 100%;
+    background: #ddd;
+    border: 1px solid #ccc;
+    height: 30px;
+    border-radius: 10px;
+}
+#bar {
+    width: 0%;
+    height: 100%;
+    background: #4CAF50;
+    border-radius: 10px;
+    transition: width 0.4s;
+}
+#btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 18px;
+}
+</style>
+</head>
+<body>
+
+<h2>Progreso guardado</h2>
+
+<div id="container">
+    <div id="bar"></div>
+</div>
+
+<button id="btn">TERMINO</button>
+
+<script>
+let bar = document.getElementById("bar");
+let btn = document.getElementById("btn");
+
+// Recuperar progreso guardado
+let saved = localStorage.getItem("progreso_pagina23");
+
+if (saved == "100") {
+    bar.style.width = "100%";
+    btn.disabled = true;
+    btn.innerHTML = "Completado ✔";
+}
+
+// Evento del botón
+btn.addEventListener("click", function () {
+    bar.style.width = "100%";
+    btn.disabled = true;
+    btn.innerHTML = "Completado ✔";
+
+    // Guardar progreso en el navegador
+    localStorage.setItem("progreso_pagina23", "100");
+});
+</script>
+
+</body>
+</html>
