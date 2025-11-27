@@ -40,7 +40,7 @@ let bar = document.getElementById("bar");
 let btn = document.getElementById("btn");
 
 // Recuperar progreso guardado
-let saved = localStorage.getItem("progreso_pagina25");
+let saved = localStorage.getItem("progreso_pagina30");
 
 if (saved == "100") {
     bar.style.width = "100%";
@@ -55,7 +55,7 @@ btn.addEventListener("click", function () {
     btn.innerHTML = "Completado ✔";
 
     // Guardar progreso en el navegador
-    localStorage.setItem("progreso_pagina25", "100");
+    localStorage.setItem("progreso_pagina30", "100");
 });
 </script>
 
