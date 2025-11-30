@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +26,7 @@
       padding:18px; 
       width: 360px;
       border-radius:12px; 
-      box-shadow:0 4px 20px rgba(49,138,131); 
+      box-shadow:0 4px 20px rgba(255,128,0); 
     }
 
     textarea { 
@@ -43,7 +44,7 @@
       padding:8px 14px; 
       border:0; 
       border-radius:8px;
-      background:#34ced9; 
+      background:#ff8000; 
       color:white; 
       cursor:pointer; 
       font-size:14px; 
@@ -73,17 +74,17 @@
   <script>
     // Cargar texto guardado
     document.getElementById("campo").value = 
-      localStorage.getItem("caja11") || "";
+      localStorage.getItem("proposito1") || "";
 
     // Guardar al escribir
     document.getElementById("campo").addEventListener("input", function() {
-      localStorage.setItem("caja11", this.value);
+      localStorage.setItem("proposito1", this.value);
       document.getElementById("msg").innerText = "Guardado ✔";
     });
 
     function borrar() {
       document.getElementById("campo").value = "";
-      localStorage.removeItem("caja11");
+      localStorage.removeItem("proposito1");
       document.getElementById("msg").innerText = "Texto borrado";
     }
   </script>
