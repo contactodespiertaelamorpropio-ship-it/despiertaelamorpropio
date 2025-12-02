@@ -1,1 +1,93 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Campo de Escritura</title>
+  <style>
+    body { 
+      font-family: Arial; 
+      margin: 0; 
+      padding: 0;
+      background: transparent;
+      display: flex;
+      justify-content: center;
+    }
+
+    .wrapper {
+      padding: 20px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .card { 
+      background:white; 
+      padding:18px; 
+      width: 360px;
+      border-radius:12px; 
+      box-shadow:0 4px 20px rgba(3, 3, 181);
+    }
+
+    textarea { 
+      width:90%; 
+      min-height:250px; 
+      padding:12px; 
+      border-radius:8px;
+      border:1px solid #ccc; 
+      resize: vertical; 
+      font-size:15px; 
+    }
+
+    button { 
+      margin-top:10px; 
+      padding:8px 14px; 
+      border:0; 
+      border-radius:8px;
+      background:#0303B5; 
+      color:white; 
+      cursor:pointer; 
+      font-size:14px; 
+    }
+
+    #msg { 
+      margin-top:8px; 
+      color:#444; 
+      font-size:14px; 
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    <div class="card">
+      <h3>Escribe aquí</h3>
+
+      <textarea id="campo"></textarea>
+
+      <button onclick="borrar()">Borrar</button>
+
+      <div id="msg"></div>
+    </div>
+  </div>
+
+  <script>
+    // Cargar texto guardado
+    document.getElementById("campo").value = 
+      localStorage.getItem("autoestima3") || "";
+
+    // Guardar al escribir
+    document.getElementById("campo").addEventListener("input", function() {
+      localStorage.setItem("autoestima3", this.value);
+      document.getElementById("msg").innerText = "Guardado ✔";
+    });
+
+    function borrar() {
+      document.getElementById("campo").value = "";
+      localStorage.removeItem("autoestima3");
+      document.getElementById("msg").innerText = "Texto borrado";
+    }
+  </script>
+
+</body>
+</html>
