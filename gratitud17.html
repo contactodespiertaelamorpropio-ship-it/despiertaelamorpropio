@@ -74,17 +74,17 @@
   <script>
     // Cargar texto guardado
     document.getElementById("campo").value = 
-      localStorage.getItem("gratitud15") || "";
+      localStorage.getItem("gratitud17") || "";
 
     // Guardar al escribir
     document.getElementById("campo").addEventListener("input", function() {
-      localStorage.setItem("gratitud15", this.value);
+      localStorage.setItem("gratitud17", this.value);
       document.getElementById("msg").innerText = "Guardado ✔";
     });
 
     function borrar() {
       document.getElementById("campo").value = "";
-      localStorage.removeItem("gratitud15");
+      localStorage.removeItem("gratitud17");
       document.getElementById("msg").innerText = "Texto borrado";
     }
   </script>
