@@ -17,10 +17,14 @@
       text-decoration: line-through;
       font-weight: normal;
     }
+
+    /* 👇 ESPACIO ENTRE CADA PREGUNTA */
+    div {
+      margin-bottom: 18px;
+    }
   </style>
 </head>
 <body>
-  <!-- 🔧 Cambia libremente el texto y el id -->
   <div>
     <input type="checkbox" id="pregunta1">
     <label for="pregunta1">Día 1 — “Regreso a Ti”</label><br>
@@ -35,39 +39,34 @@
   </div>
   <div>
     <input type="checkbox" id="pregunta4">
-    <label for="pregunta3">Día 4 – “Reconciliándote con tu cuerpo”</label><br>
+    <label for="pregunta4">Día 4 – “Reconciliándote con tu cuerpo”</label><br>
   </div>
   <div>
     <input type="checkbox" id="pregunta5">
-    <label for="pregunta3">Día 5 – "Soltar la Autoexigencia y Abrazar tu Ritmo"</label><br>
+    <label for="pregunta5">Día 5 – "Soltar la Autoexigencia y Abrazar tu Ritmo"</label><br>
   </div>
   <div>
     <input type="checkbox" id="pregunta6">
-    <label for="pregunta3">Día 6 – "Recibir en lugar de resistir"</label><br>
+    <label for="pregunta6">Día 6 – "Recibir en lugar de resistir"</label><br>
   </div>
   <div>
     <input type="checkbox" id="pregunta7">
-    <label for="pregunta3">Día 7 – "Dejar de compararte y volver a tu valor"</label><br>
+    <label for="pregunta7">Día 7 – "Dejar de compararte y volver a tu valor"</label><br>
   </div>
 
-  
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const checks = document.querySelectorAll('input[type="checkbox"]');
-
-      // 🔑 Prefijo único por página (cámbialo en cada archivo)
       const pagePrefix = "meditacion1";
 
       checks.forEach(chk => {
         const key = `${pagePrefix}_${chk.id}`;
-
-        // Restaura estado guardado
         const guardado = localStorage.getItem(key);
+
         if (guardado !== null) {
           chk.checked = guardado === "true";
         }
 
-        // Guarda cambios
         chk.addEventListener("change", () => {
           localStorage.setItem(key, String(chk.checked));
         });
@@ -76,3 +75,4 @@
   </script>
 </body>
 </html>
+
