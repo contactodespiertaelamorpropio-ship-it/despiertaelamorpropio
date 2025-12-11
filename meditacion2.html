@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Checklist Página 1</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+    label {
+      font-weight: bold;
+      cursor: pointer;
+    }
+    input[type="checkbox"]:checked + label {
+      color: blue;
+      text-decoration: line-through;
+      font-weight: normal;
+    }
+
+    /* 👇 ESPACIO ENTRE CADA PREGUNTA */
+    div {
+      margin-bottom: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <input type="checkbox" id="pregunta8">
+    <label for="pregunta8">Día 8 — “Elegir tu paz antes que agradar”</label><br>
+  </div>
+  <div>
+    <input type="checkbox" id="pregunta9">
+    <label for="pregunta9">Día 9 — “Confío en mi proceso, suelto el control”</label><br>
+  </div>
+  <div>
+    <input type="checkbox" id="pregunta10">
+    <label for="pregunta10">Día 10 – “Me permito sentir sin juzgarme”</label><br>
+  </div>
+  <div>
+    <input type="checkbox" id="pregunta11">
+    <label for="pregunta11">Día 11 – “Reconexión con tu Fortaleza Interna”</label><br>
+  </div>
+  <div>
+    <input type="checkbox" id="pregunta12">
+    <label for="pregunta12">Día 12 – "Liberando la Autocrítica"</label><br>
+  </div>
+  <div>
+    <input type="checkbox" id="pregunta13">
+    <label for="pregunta13">Día 13 – "Abrazar Tu Energia Femenina"</label><br>
+  </div>
+  <div>
+    <input type="checkbox" id="pregunta14">
+    <label for="pregunta14">Día 14 – "Atraer Relaciones Sanas"</label><br>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const checks = document.querySelectorAll('input[type="checkbox"]');
+      const pagePrefix = "meditacion2";
+
+      checks.forEach(chk => {
+        const key = `${pagePrefix}_${chk.id}`;
+        const guardado = localStorage.getItem(key);
+
+        if (guardado !== null) {
+          chk.checked = guardado === "true";
+        }
+
+        chk.addEventListener("change", () => {
+          localStorage.setItem(key, String(chk.checked));
+        });
+      });
+    });
+  </script>
+</body>
+</html>
