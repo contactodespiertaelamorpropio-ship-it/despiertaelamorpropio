@@ -160,11 +160,13 @@ function closeModal() {
   document.getElementById("modal").style.display = "none";
 }
 
-   function resetDay() {
-    checkboxes.forEach(cb => {
+/* Reiniciar día */
+function resetDay() {
+  if (confirm("¿Deseas reiniciar el día?")) {
+    checkboxes.forEach((cb, i) => {
       cb.checked = false;
-      cb.parentElement.classList.remove('completed');
-      localStorage.removeItem(cb.dataset.id);
+      items[i].classList.remove("checked");
+      localStorage.removeItem("day_check_" + i);
 
     });
   }
