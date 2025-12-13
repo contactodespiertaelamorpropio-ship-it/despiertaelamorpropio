@@ -2,131 +2,149 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Día de Amor Propio</title>
+<title>Checklist Día 1</title>
 
 <style>
   body {
     font-family: Arial, sans-serif;
+  }
+
+  .checklist {
     font-size: 14px;
-  }
-
-  .item {
+    color: #1e4fa1; /* azul */
     margin-bottom: 18px;
+    display: block;
   }
 
-  .item label {
-    color: blue;
-    cursor: pointer;
-  }
-
-  .item.completed label {
-    color: black;
+  .checklist.completed {
+    color: #000; /* negro */
     text-decoration: line-through;
   }
 
   button {
-    background-color: #FFD700; /* amarillo */
+    background-color: #f7f00f; /* amarillo */
     border: none;
     padding: 10px 18px;
     font-size: 14px;
     cursor: pointer;
-    margin-top: 12px;
-    margin-right: 8px;
+    margin-top: 15px;
+    margin-right: 10px;
   }
 
-  #mensaje {
+  button:hover {
+    opacity: 0.9;
+  }
+
+  /* MODAL */
+  .modal {
     display: none;
-    margin-top: 24px;
-    font-size: 14px;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+  }
+
+  .modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 25px;
+    width: 90%;
+    max-width: 420px;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 15px;
   }
 </style>
 </head>
 
 <body>
 
-<h3>🌸 Checklist del día</h3>
+<h3>Día de Amor Propio</h3>
 
-<div class="item">
-  <input type="checkbox" id="c1">
-  <label for="c1">Realicé el reto del día</label>
-</div>
+<label class="checklist">
+  <input type="checkbox"> Realicé el reto del día
+</label>
 
-<div class="item">
-  <input type="checkbox" id="c2">
-  <label for="c2">Escribí mi gratitud</label>
-</div>
+<label class="checklist">
+  <input type="checkbox"> Escribí mi gratitud
+</label>
 
-<div class="item">
-  <input type="checkbox" id="c3">
-  <label for="c3">Me regalé un momento de meditación</label>
-</div>
+<label class="checklist">
+  <input type="checkbox"> Me regalé un momento de meditación
+</label>
 
-<div class="item">
-  <input type="checkbox" id="c4">
-  <label for="c4">Leí o repetí la afirmación</label>
-</div>
+<label class="checklist">
+  <input type="checkbox"> Leí o repetí la afirmación
+</label>
 
-<div class="item">
-  <input type="checkbox" id="c5">
-  <label for="c5">Observé el wallpaper con intención</label>
-</div>
+<label class="checklist">
+  <input type="checkbox"> Observé el wallpaper con intención
+</label>
 
-<div class="item">
-  <input type="checkbox" id="c6">
-  <label for="c6">Respondí la reflexión</label>
-</div>
+<label class="checklist">
+  <input type="checkbox"> Respondí la reflexión
+</label>
 
-<button onclick="completarDia()">Marcar día como completado</button>
+<button onclick="marcarCompletado()">Día como completado</button>
 <button onclick="reiniciarDia()">Reiniciar día</button>
 
-<div id="mensaje">
-  🌷 <strong>Lo has logrado</strong> ✨  
-  <br><br>
-  Paso a paso, con amor, vas avanzando.  
-  <br>
-  Gracias por elegirte hoy.  
-  <br><br>
-  ✨ Mañana es otro encuentro contigo ✨
+<!-- MODAL -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    🌷 <strong>Lo has logrado</strong> ✨<br><br>
+    Paso a paso, con amor, vas avanzando.<br>
+    Gracias por elegirte hoy. ✨<br><br>
+    ✨ Mañana es otro encuentro contigo ✨<br><br>
+    <button onclick="cerrarModal()">Cerrar</button>
+  </div>
 </div>
 
 <script>
-  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  const checkboxes = document.querySelectorAll("input[type='checkbox']");
+  const labels = document.querySelectorAll(".checklist");
 
   // Cargar estado guardado
-  checkboxes.forEach(cb => {
-    const saved = localStorage.getItem(cb.id);
-    if (saved === 'true') {
-      cb.checked = true;
-      cb.parentElement.classList.add('completed');
+  labels.forEach((label, index) => {
+    const estado = localStorage.getItem("check_" + index);
+    if (estado === "true") {
+      checkboxes[index].checked = true;
+      label.classList.add("completed");
     }
+  });
 
-    cb.addEventListener('change', () => {
-      localStorage.setItem(cb.id, cb.checked);
-      cb.parentElement.classList.toggle('completed', cb.checked);
+  // Cambiar estilo y guardar estado
+  checkboxes.forEach((checkbox, index) => {
+    checkbox.addEventListener("change", () => {
+      if (checkbox.checked) {
+        labels[index].classList.add("completed");
+        localStorage.setItem("check_" + index, "true");
+      } else {
+        labels[index].classList.remove("completed");
+        localStorage.setItem("check_" + index, "false");
+      }
     });
   });
 
-  function completarDia() {
-    document.getElementById('mensaje').style.display = 'block';
-    localStorage.setItem('mensajeVisible', 'true');
+  function marcarCompletado() {
+    document.getElementById("modal").style.display = "block";
+  }
+
+  function cerrarModal() {
+    document.getElementById("modal").style.display = "none";
   }
 
   function reiniciarDia() {
-    checkboxes.forEach(cb => {
-      cb.checked = false;
-      cb.parentElement.classList.remove('completed');
-      localStorage.removeItem(cb.id);
+    checkboxes.forEach((checkbox, index) => {
+      checkbox.checked = false;
+      labels[index].classList.remove("completed");
+      localStorage.removeItem("check_" + index);
     });
-
-    document.getElementById('mensaje').style.display = 'none';
-    localStorage.removeItem('mensajeVisible');
-  }
-
-  // Restaurar mensaje si ya fue completado
-  if (localStorage.getItem('mensajeVisible') === 'true') {
-    document.getElementById('mensaje').style.display = 'block';
   }
 </script>
 
 </body>
 </html>
+
