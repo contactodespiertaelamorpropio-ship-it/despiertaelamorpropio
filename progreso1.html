@@ -88,31 +88,31 @@ button:hover {
 
 <body>
 
-<h2>🌷 Día 1 de Amor Propio</h2>
+<h2> Día 1 de Amor Propio</h2>
 
 <div id="checklist">
   <label class="check-item">
-    <input type="checkbox"> ✨ Realicé el reto del día
+    <input type="checkbox">  Realicé el reto del día ✨
   </label>
 
   <label class="check-item">
-    <input type="checkbox"> 🌷 Practiqué gratitud
+    <input type="checkbox">  Practiqué gratitud 🌷 
   </label>
 
   <label class="check-item">
-    <input type="checkbox"> ✨ Momento de meditación
+    <input type="checkbox">  Momento de meditación ✨
   </label>
 
   <label class="check-item">
-    <input type="checkbox"> 🌷 Leí mi afirmación
+    <input type="checkbox">  Leí mi afirmación 🌷
   </label>
 
   <label class="check-item">
-    <input type="checkbox"> ✨ Observé el wallpaper
+    <input type="checkbox">  Observé el wallpaper ✨
   </label>
 
   <label class="check-item">
-    <input type="checkbox"> 🌷 Reflexioné sobre mi día
+    <input type="checkbox"> Reflexioné sobre mi día 🌷
   </label>
 </div>
 
@@ -122,7 +122,7 @@ button:hover {
 <!-- Modal -->
 <div id="modal" class="modal">
   <div class="modal-content">
-    <h3>🌷 Lo has logrado ✨</h3>
+    <h3>Lo has logrado </h3>
     <p>
       Paso a paso, con amor, vas avanzando.<br>
       Gracias por elegirte hoy.<br><br>
@@ -160,13 +160,12 @@ function closeModal() {
   document.getElementById("modal").style.display = "none";
 }
 
-/* Reiniciar día */
-function resetDay() {
-  if (confirm("¿Deseas reiniciar el día?")) {
-    checkboxes.forEach((cb, i) => {
+   function resetDay() {
+    checkboxes.forEach(cb => {
       cb.checked = false;
-      items[i].classList.remove("checked");
-      localStorage.removeItem("day_check_" + i);
+      cb.parentElement.classList.remove('completed');
+      localStorage.removeItem(cb.dataset.id);
+
     });
   }
 }
