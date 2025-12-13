@@ -2,147 +2,174 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Checklist Día 1</title>
+<title>Día 1 de Amor Propio</title>
 
 <style>
-  body {
-    font-family: Arial, sans-serif;
-  }
+body {
+  font-family: Arial, sans-serif;
+  background: #fff;
+}
 
-  .checklist {
-    font-size: 14px;
-    color: #1e4fa1; /* azul */
-    margin-bottom: 18px;
-    display: block;
-  }
+/* Título */
+h2 {
+  color: #9924f2;
+  margin-bottom: 20px;
+}
 
-  .checklist.completed {
-    color: #000; /* negro */
-    text-decoration: line-through;
-  }
+/* Checklist */
+.check-item {
+  font-size: 14px;
+  color: #1a4ed8;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+}
 
-  button {
-    background-color: #f7f00f; /* amarillo */
-    border: none;
-    padding: 10px 18px;
-    font-size: 14px;
-    cursor: pointer;
-    margin-top: 15px;
-    margin-right: 10px;
-  }
+.check-item.checked {
+  color: #000;
+  text-decoration: line-through;
+}
 
-  button:hover {
-    opacity: 0.9;
-  }
+.check-item input {
+  margin-right: 10px;
+}
 
-  /* MODAL */
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 10;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.4);
-  }
+/* Botones */
+button {
+  background-color: #f7f00f;
+  border: none;
+  padding: 10px 18px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-top: 15px;
+}
 
-  .modal-content {
-    background-color: #fff;
-    margin: 15% auto;
-    padding: 25px;
-    width: 90%;
-    max-width: 420px;
-    text-align: center;
-    border-radius: 8px;
-    font-size: 15px;
-  }
+button:hover {
+  opacity: 0.9;
+}
+
+#resetBtn {
+  background-color: #eee;
+  margin-left: 10px;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  background: #fff;
+  padding: 25px;
+  max-width: 420px;
+  margin: 15% auto;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.modal-content h3 {
+  color: #ed15ea;
+}
+
+.close {
+  margin-top: 15px;
+  background: #f7f00f;
+}
 </style>
 </head>
 
 <body>
 
-<h3>Día de Amor Propio</h3>
+<h2>🌷 Día 1 de Amor Propio</h2>
 
-<label class="checklist">
-  <input type="checkbox"> Realicé el reto del día
-</label>
+<div id="checklist">
+  <label class="check-item">
+    <input type="checkbox"> ✨ Realicé el reto del día
+  </label>
 
-<label class="checklist">
-  <input type="checkbox"> Escribí mi gratitud
-</label>
+  <label class="check-item">
+    <input type="checkbox"> 🌷 Practiqué gratitud
+  </label>
 
-<label class="checklist">
-  <input type="checkbox"> Me regalé un momento de meditación
-</label>
+  <label class="check-item">
+    <input type="checkbox"> ✨ Momento de meditación
+  </label>
 
-<label class="checklist">
-  <input type="checkbox"> Leí o repetí la afirmación
-</label>
+  <label class="check-item">
+    <input type="checkbox"> 🌷 Leí mi afirmación
+  </label>
 
-<label class="checklist">
-  <input type="checkbox"> Observé el wallpaper con intención
-</label>
+  <label class="check-item">
+    <input type="checkbox"> ✨ Observé el wallpaper
+  </label>
 
-<label class="checklist">
-  <input type="checkbox"> Respondí la reflexión
-</label>
+  <label class="check-item">
+    <input type="checkbox"> 🌷 Reflexioné sobre mi día
+  </label>
+</div>
 
-<button onclick="marcarCompletado()">Día como completado</button>
-<button onclick="reiniciarDia()">Reiniciar día</button>
+<button onclick="completeDay()">Dia conquistado!</button>
+<button id="resetBtn" onclick="resetDay()">Reiniciar día</button>
 
-<!-- MODAL -->
+<!-- Modal -->
 <div id="modal" class="modal">
   <div class="modal-content">
-    🌷 <strong>Lo has logrado</strong> ✨<br><br>
-    Paso a paso, con amor, vas avanzando.<br>
-    Gracias por elegirte hoy. ✨<br><br>
-    ✨ Mañana es otro encuentro contigo ✨<br><br>
-    <button onclick="cerrarModal()">Cerrar</button>
+    <h3>🌷 Lo has logrado ✨</h3>
+    <p>
+      Paso a paso, con amor, vas avanzando.<br>
+      Gracias por elegirte hoy.<br><br>
+      ✨ Mañana es otro encuentro contigo ✨
+    </p>
+    <button class="close" onclick="closeModal()">Cerrar</button>
   </div>
 </div>
 
 <script>
-  const checkboxes = document.querySelectorAll("input[type='checkbox']");
-  const labels = document.querySelectorAll(".checklist");
+const checkboxes = document.querySelectorAll("input[type='checkbox']");
+const items = document.querySelectorAll(".check-item");
 
-  // Cargar estado guardado
-  labels.forEach((label, index) => {
-    const estado = localStorage.getItem("check_" + index);
-    if (estado === "true") {
-      checkboxes[index].checked = true;
-      label.classList.add("completed");
-    }
-  });
-
-  // Cambiar estilo y guardar estado
-  checkboxes.forEach((checkbox, index) => {
-    checkbox.addEventListener("change", () => {
-      if (checkbox.checked) {
-        labels[index].classList.add("completed");
-        localStorage.setItem("check_" + index, "true");
-      } else {
-        labels[index].classList.remove("completed");
-        localStorage.setItem("check_" + index, "false");
-      }
-    });
-  });
-
-  function marcarCompletado() {
-    document.getElementById("modal").style.display = "block";
+/* Cargar estado */
+checkboxes.forEach((cb, i) => {
+  const saved = localStorage.getItem("day_check_" + i);
+  if (saved === "true") {
+    cb.checked = true;
+    items[i].classList.add("checked");
   }
 
-  function cerrarModal() {
-    document.getElementById("modal").style.display = "none";
-  }
+  cb.addEventListener("change", () => {
+    localStorage.setItem("day_check_" + i, cb.checked);
+    items[i].classList.toggle("checked", cb.checked);
+  });
+});
 
-  function reiniciarDia() {
-    checkboxes.forEach((checkbox, index) => {
-      checkbox.checked = false;
-      labels[index].classList.remove("completed");
-      localStorage.removeItem("check_" + index);
+/* Completar día */
+function completeDay() {
+  document.getElementById("modal").style.display = "block";
+}
+
+/* Cerrar modal */
+function closeModal() {
+  document.getElementById("modal").style.display = "none";
+}
+
+/* Reiniciar día */
+function resetDay() {
+  if (confirm("¿Deseas reiniciar el día?")) {
+    checkboxes.forEach((cb, i) => {
+      cb.checked = false;
+      items[i].classList.remove("checked");
+      localStorage.removeItem("day_check_" + i);
     });
   }
+}
 </script>
 
 </body>
