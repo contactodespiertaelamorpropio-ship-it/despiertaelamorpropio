@@ -1,0 +1,86 @@
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Checklist Página 1</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+    label {
+      font-weight: bold;
+      cursor: pointer;
+    }
+    input[type="checkbox"]:checked + label {
+      color: blue;
+      text-decoration: line-through;
+      font-weight: normal;
+    }
+
+    /* 👇 ESPACIO ENTRE CADA PREGUNTA */
+    div {
+      margin-bottom: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <input type="checkbox" id="pregunta22">
+    <label for="pregunta8">Día 22 — “Habitar el Presente con Amor”</label><br>
+  </div>
+  <div>
+    <input type="checkbox" id="pregunta23">
+    <label for="pregunta9">Día 23 — “Despertar Tu Voz Interior”</label><br>
+  </div>
+  <div>
+    <input type="checkbox" id="pregunta24">
+    <label for="pregunta10">Día 24 – “Abrirte a Recibir ”</label><br>
+  </div>
+  <div>
+    <input type="checkbox" id="pregunta25">
+    <label for="pregunta11">Día 25 – “Soltar la Culpa y Perdonarte”</label><br>
+  </div>
+  <div>
+    <input type="checkbox" id="pregunta26">
+    <label for="pregunta12">Día 26 – "Soltar la Autoexigencia y Abrazar tu Ritmo"</label><br>
+  </div>
+  <div>
+    <input type="checkbox" id="pregunta27">
+    <label for="pregunta13">Día 27 – "Elegirte Cada Día"</label><br>
+  </div>
+  <div>
+    <input type="checkbox" id="pregunta28">
+    <label for="pregunta14">Día 28 – "Confiar en Tu Sabiduría Interior"</label><br>
+  </div>
+  <div>
+    <input type="checkbox" id="pregunta29">
+    <label for="pregunta14">Día 29 – "Celebrar Quién Eres Hoy"</label><br>
+  </div>
+    <input type="checkbox" id="pregunta30">
+    <label for="pregunta14">Día 30 – "Volver a Ti, Siempre"</label><br>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const checks = document.querySelectorAll('input[type="checkbox"]');
+      const pagePrefix = "meditacion4";
+
+      checks.forEach(chk => {
+        const key = `${pagePrefix}_${chk.id}`;
+        const guardado = localStorage.getItem(key);
+
+        if (guardado !== null) {
+          chk.checked = guardado === "true";
+        }
+
+        chk.addEventListener("change", () => {
+          localStorage.setItem(key, String(chk.checked));
+        });
+      });
+    });
+  </script>
+</body>
+</html>
