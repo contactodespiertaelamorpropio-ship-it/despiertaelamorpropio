@@ -121,7 +121,7 @@
 <div id="modal" class="modal">
   <div class="modal-content">
     <h2>
-      <span class="icon-red">🌷</span> Lo has logrado
+      <span class="icon-red">🌷</span> Lo has logrado!!
     </h2>
 
     <p style="color:#000;">
@@ -171,14 +171,15 @@
     modal.style.display = 'none';
   }
 
-  function reiniciarDia() {
-    if (confirm("🌿 Reiniciar también es una forma de cuidarte.")) {
-      checks.forEach((check, index) => {
-        check.checked = false;
-        localStorage.removeItem('check_' + index);
-      });
-    }
-  }
+ function reiniciarDia() {
+  checks.forEach((check, index) => {
+    check.checked = false;
+    localStorage.removeItem('check_' + index);
+  });
+
+  warning.style.display = 'none';
+}
+    
 </script>
 
 </body>
