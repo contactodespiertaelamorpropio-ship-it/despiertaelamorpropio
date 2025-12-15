@@ -138,10 +138,7 @@
           chk.checked = guardado === "true";
         }
 
-    chk.addEventListener("change", () => {
-      localStorage.setItem(key, String(chk.checked));
-
-  // 👇 si se desmarca algo, se permite mostrar de nuevo
+     // 👇 si se desmarca algo, se permite mostrar de nuevo
   if (!chk.checked) {
     localStorage.removeItem(logroKey);
   }
