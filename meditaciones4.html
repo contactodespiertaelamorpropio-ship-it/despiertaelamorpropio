@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -63,24 +61,62 @@
     <label for="pregunta14">Día 30 – "Volver a Ti, Siempre"</label><br>
   </div>
 
+  <!-- 🌸 MODAL -->
+  <div class="modal" id="modalLogro">
+    <div class="modal-content">
+      <h2>🌸 Bien Hecho</h2>
+      <p>
+        Felicidades por completar el mes.<br>
+        Cada día es mejor, cada día es un día de victoria💛
+      </p>
+      <button onclick="cerrarModal()">Cerrar</button>
+    </div>
+  </div>
+
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const checks = document.querySelectorAll('input[type="checkbox"]');
-      const pagePrefix = "meditacion4";
+document.addEventListener("DOMContentLoaded", () => {
+  const checks = document.querySelectorAll('input[type="checkbox"]');
+  const pagePrefix = "meditacion1";
+  const logroKey = `${pagePrefix}_logro_mostrado`;
+  const modal = document.getElementById("modalLogro");
 
-      checks.forEach(chk => {
-        const key = `${pagePrefix}_${chk.id}`;
-        const guardado = localStorage.getItem(key);
+  function verificarLogro() {
+    const todasMarcadas = Array.from(checks).every(chk => chk.checked);
 
-        if (guardado !== null) {
-          chk.checked = guardado === "true";
-        }
+    if (todasMarcadas && !localStorage.getItem(logroKey)) {
+      modal.style.display = "flex";
+    }
+  }
 
-        chk.addEventListener("change", () => {
-          localStorage.setItem(key, String(chk.checked));
-        });
-      });
+  checks.forEach(chk => {
+    const key = `${pagePrefix}_${chk.id}`;
+    const guardado = localStorage.getItem(key);
+
+    if (guardado !== null) {
+      chk.checked = guardado === "true";
+    }
+
+    chk.addEventListener("change", () => {
+      localStorage.setItem(key, String(chk.checked));
+
+      // 👇 si se desmarca algo, se permite mostrar otra vez
+      if (!chk.checked) {
+        localStorage.removeItem(logroKey);
+      }
+
+      verificarLogro();
     });
-  </script>
+  });
+
+  window.cerrarModal = function () {
+    modal.style.display = "none";
+    // 👇 aquí recién se guarda el logro
+    localStorage.setItem(logroKey, "true");
+  };
+
+  verificarLogro();
+});
+</script>
+
 </body>
 </html>
