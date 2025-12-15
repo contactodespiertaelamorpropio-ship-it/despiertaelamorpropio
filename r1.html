@@ -10,7 +10,6 @@
     text-align: center;
   }
 
-  /* Caja */
   .caja {
     width: 200px;
     cursor: pointer;
@@ -27,52 +26,23 @@
     color: #555;
   }
 
-  /* Overlay */
-  .overlay {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.6);
-    z-index: 1000;
-  }
-
-  /* Popup */
-  .popup {
-    background: #fff;
-    width: 90%;
-    max-width: 320px;
-    margin: 20% auto;
-    padding: 20px;
-    border-radius: 18px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-  }
-
-  .popup h2 {
-    margin-top: 0;
-    color: #b38b59;
-  }
-
-  .popup p {
-    font-size: 14px;
-    color: #444;
-  }
-
-  .btn {
+  #mensaje {
     margin-top: 15px;
-    padding: 10px 20px;
-    background: #b38b59;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
+    font-size: 14px;
+    color: #777;
+    display: none;
+  }
+
+  audio {
+    margin-top: 15px;
+    width: 100%;
+    display: none;
   }
 </style>
 </head>
 
 <body>
 
-<!-- Caja cerrada -->
 <img 
   src="https://drive.google.com/thumbnail?id=1k_sTDQWqEc-6lmX069cWV2M-2fvTnPOJ&sz=w1000"
   id="caja"
@@ -84,43 +54,48 @@
   Toca la caja para recibir tu regalo de hoy 🎁
 </div>
 
-<!-- POPUP -->
-<div class="overlay" id="popup">
-  <div class="popup">
-    <h2>✨ Tu regalo de hoy</h2>
-    <p>
-      Respira profundo.<br><br>
-      Este regalo llega para acompañarte hoy 💛
-    </p>
+<div id="mensaje"></div>
 
-    <button class="btn" onclick="cerrarPopup()">Cerrar</button>
-  </div>
-</div>
+<audio id="audioRegalo" controls>
+  <source src="https://drive.google.com/uc?export=download&id=ID_DEL_AUDIO" type="audio/mpeg">
+  Tu navegador no soporta audio.
+</audio>
 
 <script>
   const hoy = new Date().toISOString().split('T')[0];
+  const caja = document.getElementById("caja");
+  const mensaje = document.getElementById("mensaje");
+  const audio = document.getElementById("audioRegalo");
+
+  // AL CARGAR LA PÁGINA
+  if (localStorage.getItem("regaloDiario") === hoy) {
+    caja.src =
+      "https://drive.google.com/thumbnail?id=1UUXNNptnWth-ss2IJG0AhfoVk5pU0jCK&sz=w1000";
+    mensaje.innerHTML = "🌙 Ya abriste tu regalo hoy.<br>Vuelve mañana ✨";
+    mensaje.style.display = "block";
+  }
 
   function abrirCaja() {
-    const ultimoDia = localStorage.getItem("regaloDiario");
-
-    if (ultimoDia === hoy) {
-      alert("🌙 Ya abriste tu regalo hoy.\nVuelve mañana ✨");
+    // Si ya abrió hoy, no mostrar audio
+    if (localStorage.getItem("regaloDiario") === hoy) {
+      mensaje.innerHTML = "🌙 Ya abriste tu regalo hoy.<br>Vuelve mañana ✨";
+      mensaje.style.display = "block";
       return;
     }
 
-    // Guardar el día
+    // Marcar como abierto hoy
     localStorage.setItem("regaloDiario", hoy);
 
-    // Cambiar imagen a caja abierta
-    document.getElementById("caja").src =
-      "https://drive.google.com/thumbnail?id=1UUXNNptnWth-ss2IJG0AhfoVk5pU0jCK&sz=w1000";
-    
-    // Mostrar popup
-    document.getElementById("popup").style.display = "block";
-  }
+    // Esperar a que cargue la imagen abierta
+    caja.onload = function () {
+      mensaje.innerHTML = "✨ Este es tu regalo de hoy.<br>Escúchalo con calma 💛";
+      mensaje.style.display = "block";
+      audio.style.display = "block";
+    };
 
-  function cerrarPopup() {
-    document.getElementById("popup").style.display = "none";
+    // Cambiar a caja abierta
+    caja.src =
+      "https://drive.google.com/thumbnail?id=1UUXNNptnWth-ss2IJG0AhfoVk5pU0jCK&sz=w1000";
   }
 </script>
 
