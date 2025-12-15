@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Checklist Página 1</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    label {
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    input[type="checkbox"]:checked + label {
+      color: blue;
+      text-decoration: line-through;
+      font-weight: normal;
+    }
+
+    div {
+      margin-bottom: 18px;
+    }
+
+    /* 🌸 MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 24px;
+      max-width: 320px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .modal-content h2 {
+      margin-top: 0;
+      font-size: 18px;
+    }
+
+    .modal-content p {
+      margin: 12px 0 20px;
+      line-height: 1.5;
+    }
+
+    .modal-content button {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .modal-content button:hover {
+      background: #2563eb;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div>
+    <input type="checkbox" id="pregunta1">
+    <label for="pregunta1">Día 1 — “Regreso a Ti”</label>
+  </div>
+  <div>
+    <input type="checkbox" id="pregunta2">
+    <label for="pregunta2">Día 2 — “Retiro tu máscara y encuentro tu verdad”</label>
+  </div>
+  <div>
+    <input type="checkbox" id="pregunta3">
+    <label for="pregunta3">Día 3 – “Sanar la relación contigo misma”</label>
+  </div>
+  <div>
+    <input type="checkbox" id="pregunta4">
+    <label for="pregunta4">Día 4 – “Reconciliándote con tu cuerpo”</label>
+  </div>
+  <div>
+    <input type="checkbox" id="pregunta5">
+    <label for="pregunta5">Día 5 – "Soltar la Autoexigencia y Abrazar tu Ritmo"</label>
+  </div>
+  <div>
+    <input type="checkbox" id="pregunta6">
+    <label for="pregunta6">Día 6 – "Recibir en lugar de resistir"</label>
+  </div>
+  <div>
+    <input type="checkbox" id="pregunta7">
+    <label for="pregunta7">Día 7 – "Dejar de compararte y volver a tu valor"</label>
+  </div>
+
+  <!-- 🌸 MODAL -->
+  <div class="modal" id="modalLogro">
+    <div class="modal-content">
+      <h2>🌸 Esta semana lo has logrado</h2>
+      <p>
+        Has sido fiel a tu proceso y a tu rutina.<br>
+        Gracias por elegirte 💛
+      </p>
+      <button onclick="cerrarModal()">Cerrar</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const checks = document.querySelectorAll('input[type="checkbox"]');
+      const pagePrefix = "meditacion1";
+      const logroKey = `${pagePrefix}_logro_mostrado`;
+      const modal = document.getElementById("modalLogro");
+
+      function verificarLogro() {
+        const todasMarcadas = Array.from(checks).every(chk => chk.checked);
+
+        if (todasMarcadas && !localStorage.getItem(logroKey)) {
+          modal.style.display = "flex";
+          localStorage.setItem(logroKey, "true");
+        }
+      }
+
+      checks.forEach(chk => {
+        const key = `${pagePrefix}_${chk.id}`;
+        const guardado = localStorage.getItem(key);
+
+        if (guardado !== null) {
+          chk.checked = guardado === "true";
+        }
+
+        chk.addEventListener("change", () => {
+          localStorage.setItem(key, String(chk.checked));
+          verificarLogro();
+        });
+      });
+
+      verificarLogro();
+      
+      window.cerrarModal = function () {
+        modal.style.display = "none";
+      };
+    });
+  </script>
+
+</body>
+</html>
