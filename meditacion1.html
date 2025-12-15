@@ -115,42 +115,49 @@
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const checks = document.querySelectorAll('input[type="checkbox"]');
-      const pagePrefix = "meditacion1";
-      const logroKey = `${pagePrefix}_logro_mostrado`;
-      const modal = document.getElementById("modalLogro");
+document.addEventListener("DOMContentLoaded", () => {
+  const checks = document.querySelectorAll('input[type="checkbox"]');
+  const pagePrefix = "meditacion1";
+  const logroKey = `${pagePrefix}_logro_mostrado`;
+  const modal = document.getElementById("modalLogro");
 
-      function verificarLogro() {
-        const todasMarcadas = Array.from(checks).every(chk => chk.checked);
+  function verificarLogro() {
+    const todasMarcadas = Array.from(checks).every(chk => chk.checked);
 
-        if (todasMarcadas && !localStorage.getItem(logroKey)) {
-          modal.style.display = "flex";
-          localStorage.setItem(logroKey, "true");
-        }
+    if (todasMarcadas && !localStorage.getItem(logroKey)) {
+      modal.style.display = "flex";
+    }
+  }
+
+  checks.forEach(chk => {
+    const key = `${pagePrefix}_${chk.id}`;
+    const guardado = localStorage.getItem(key);
+
+    if (guardado !== null) {
+      chk.checked = guardado === "true";
+    }
+
+    chk.addEventListener("change", () => {
+      localStorage.setItem(key, String(chk.checked));
+
+      // 👇 si se desmarca algo, se permite mostrar otra vez
+      if (!chk.checked) {
+        localStorage.removeItem(logroKey);
       }
 
-      checks.forEach(chk => {
-        const key = `${pagePrefix}_${chk.id}`;
-        const guardado = localStorage.getItem(key);
+      verificarLogro();
+    });
+  });
 
-        if (guardado !== null) {
-          chk.checked = guardado === "true";
-        }
-
-     // 👇 si se desmarca algo, se permite mostrar de nuevo
-  if (!chk.checked) {
-    localStorage.removeItem(logroKey);
-  }
+  window.cerrarModal = function () {
+    modal.style.display = "none";
+    // 👇 aquí recién se guarda el logro
+    localStorage.setItem(logroKey, "true");
+  };
 
   verificarLogro();
 });
-      
-      window.cerrarModal = function () {
-        modal.style.display = "none";
-      };
-    });
-  </script>
+</script>
 
 </body>
 </html>
