@@ -73,41 +73,49 @@
 
 <body>
 
- <body>
   <div>
     <input type="checkbox" id="pregunta22">
-    <label for="pregunta8">Día 22 — “Habitar el Presente con Amor”</label><br>
+    <label for="pregunta22">Día 22 — “Habitar el Presente con Amor”</label>
   </div>
+
   <div>
     <input type="checkbox" id="pregunta23">
-    <label for="pregunta9">Día 23 — “Despertar Tu Voz Interior”</label><br>
+    <label for="pregunta23">Día 23 — “Despertar Tu Voz Interior”</label>
   </div>
+
   <div>
     <input type="checkbox" id="pregunta24">
-    <label for="pregunta10">Día 24 – “Abrirte a Recibir ”</label><br>
+    <label for="pregunta24">Día 24 – “Abrirte a Recibir”</label>
   </div>
+
   <div>
     <input type="checkbox" id="pregunta25">
-    <label for="pregunta11">Día 25 – “Soltar la Culpa y Perdonarte”</label><br>
+    <label for="pregunta25">Día 25 – “Soltar la Culpa y Perdonarte”</label>
   </div>
+
   <div>
     <input type="checkbox" id="pregunta26">
-    <label for="pregunta12">Día 26 – "Soltar la Autoexigencia y Abrazar tu Ritmo"</label><br>
+    <label for="pregunta26">Día 26 – “Soltar la Autoexigencia y Abrazar tu Ritmo”</label>
   </div>
+
   <div>
     <input type="checkbox" id="pregunta27">
-    <label for="pregunta13">Día 27 – "Elegirte Cada Día"</label><br>
+    <label for="pregunta27">Día 27 – “Elegirte Cada Día”</label>
   </div>
+
   <div>
     <input type="checkbox" id="pregunta28">
-    <label for="pregunta14">Día 28 – "Confiar en Tu Sabiduría Interior"</label><br>
+    <label for="pregunta28">Día 28 – “Confiar en Tu Sabiduría Interior”</label>
   </div>
+
   <div>
     <input type="checkbox" id="pregunta29">
-    <label for="pregunta14">Día 29 – "Celebrar Quién Eres Hoy"</label><br>
+    <label for="pregunta29">Día 29 – “Celebrar Quién Eres Hoy”</label>
   </div>
+
+  <div>
     <input type="checkbox" id="pregunta30">
-    <label for="pregunta14">Día 30 – "Volver a Ti, Siempre"</label><br>
+    <label for="pregunta30">Día 30 – “Volver a Ti, Siempre”</label>
   </div>
 
   <!-- 🌸 MODAL -->
@@ -116,58 +124,53 @@
       <h2>🌸 Bien Hecho</h2>
       <p>
         Felicidades por completar el mes.<br>
-        Cada día es mejor, cada día es un día de victoria💛
+        Cada día es mejor, cada día es un día de victoria 💛
       </p>
       <button onclick="cerrarModal()">Cerrar</button>
     </div>
   </div>
 
   <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const checks = document.querySelectorAll('input[type="checkbox"]');
+      const pagePrefix = "meditacion1";
+      const logroKey = `${pagePrefix}_logro_mostrado`;
+      const modal = document.getElementById("modalLogro");
 
-  <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const checks = document.querySelectorAll('input[type="checkbox"]');
-  const pagePrefix = "meditacion1";
-  const logroKey = `${pagePrefix}_logro_mostrado`;
-  const modal = document.getElementById("modalLogro");
-
-  function verificarLogro() {
-    const todasMarcadas = Array.from(checks).every(chk => chk.checked);
-
-    if (todasMarcadas && !localStorage.getItem(logroKey)) {
-      modal.style.display = "flex";
-    }
-  }
-
-  checks.forEach(chk => {
-    const key = `${pagePrefix}_${chk.id}`;
-    const guardado = localStorage.getItem(key);
-
-    if (guardado !== null) {
-      chk.checked = guardado === "true";
-    }
-
-    chk.addEventListener("change", () => {
-      localStorage.setItem(key, String(chk.checked));
-
-      // 👇 si se desmarca algo, se permite mostrar otra vez
-      if (!chk.checked) {
-        localStorage.removeItem(logroKey);
+      function verificarLogro() {
+        const todasMarcadas = Array.from(checks).every(chk => chk.checked);
+        if (todasMarcadas && !localStorage.getItem(logroKey)) {
+          modal.style.display = "flex";
+        }
       }
+
+      checks.forEach(chk => {
+        const key = `${pagePrefix}_${chk.id}`;
+        const guardado = localStorage.getItem(key);
+
+        if (guardado !== null) {
+          chk.checked = guardado === "true";
+        }
+
+        chk.addEventListener("change", () => {
+          localStorage.setItem(key, chk.checked);
+
+          if (!chk.checked) {
+            localStorage.removeItem(logroKey);
+          }
+
+          verificarLogro();
+        });
+      });
+
+      window.cerrarModal = function () {
+        modal.style.display = "none";
+        localStorage.setItem(logroKey, "true");
+      };
 
       verificarLogro();
     });
-  });
-
-  window.cerrarModal = function () {
-    modal.style.display = "none";
-    // 👇 aquí recién se guarda el logro
-    localStorage.setItem(logroKey, "true");
-  };
-
-  verificarLogro();
-});
-</script>
+  </script>
 
 </body>
 </html>
