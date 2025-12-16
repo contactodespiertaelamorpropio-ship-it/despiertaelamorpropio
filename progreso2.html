@@ -68,17 +68,28 @@
     margin-bottom: 15px;
   }
 
-  .icon-yellow { color: #f7f00f; }
-  .icon-red { color: #f70f36; }
-  .icon-green { color: #18e30e; }
-  .icon-orange { color: #f5480f; }
+ /* Destello amarillo */
+.destello {
+  background: #f7f00f;
+  color: #000;
+  padding: 6px 12px;
+  border-radius: 20px;
+  display: inline-block;
+  font-weight: bold;
+  box-shadow: 0 0 12px rgba(247, 240, 15, 0.8);
+}
+
+/* Emoji amarillo */
+.icon-yellow {
+  color: #f7f00f;
+}
 
 </style>
 </head>
 
 <body>
 
-<h3 style="color:#9924f2;">Día 1 de Amor Propio</h3>
+<h3 style="color:#9924f2;">Día 2 de Amor Propio</h3>
 
 <div class="check-item">
   <input type="checkbox" id="c1">
@@ -120,16 +131,18 @@
 <!-- Modal -->
 <div id="modal" class="modal">
   <div class="modal-content">
-    <h2>
-      <span class="icon-red">🌷</span>Bien hecho!!
-    </h2>
+  <h2>
+    <span class="icon-yellow">✨</span>
+    <span class="destello">¡Bien hecho!</span>
+    <span class="icon-yellow">✨</span>
+  </h2>
 
-    <p style="color:#000;">
+    <p class="destello">
       Cada pequeño avance cuenta.<br>
       Hoy elegiste cuidarte.
     </p>
 
-    <p class="icon-green">
+    <p class="destello">
       ✨ Mañana es otro encuentro contigo ✨
     </p>
 
