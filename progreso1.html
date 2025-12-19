@@ -138,47 +138,47 @@
 </div>
 
 <script>
-        const diaActual = "dia1"; // 👈 CAMBIA ESTO EN CADA PÁGINA
-        const checks = document.querySelectorAll('input[type="checkbox"]');
-        const warning = document.getElementById('warning');
-        const modal = document.getElementById('modal');
+    const diaActual = "dia1"; // 👈 CAMBIA ESTO EN CADA PÁGINA
+    const checks = document.querySelectorAll('input[type="checkbox"]');
+    const warning = document.getElementById('warning');
+    const modal = document.getElementById('modal');
 
-        // Cargar estado guardado
+    // Cargar estado guardado
       
-         checks.forEach((check, index) => {
-            const key = `${diaActual}_check_${index}`;
-            const saved = localStorage.getItem(key);
+    checks.forEach((check, index) => {
+       const key = `${diaActual}_check_${index}`;
+       const saved = localStorage.getItem(key);
 
-            if (saved === 'true') check.checked = true;
+        if (saved === 'true') check.checked = true;
 
-            check.addEventListener('change', () => {
-                localStorage.setItem(key, check.checked);
-            });
-        });
+      check.addEventListener('change', () => {
+         localStorage.setItem(key, check.checked);
+      });
+  });
 
-        function completarDia() {
-            const algunoMarcado = Array.from(checks).some(c => c.checked);
+      function completarDia() {
+          const algunoMarcado = Array.from(checks).some(c => c.checked);
 
-            if (!algunoMarcado) {
-                warning.style.display = 'block';
-                return;
-            }
+           if (!algunoMarcado) {
+              warning.style.display = 'block';
+              return;
+        }
 
             warning.style.display = 'none';
             modal.style.display = 'block';
         }
 
-        function cerrarModal() {
-            modal.style.display = 'none';
-        }
+      function cerrarModal() {
+         modal.style.display = 'none';
+      }
 
-        function reiniciarDia() {
-            checks.forEach((check, index) => {
-                check.checked = false;
-                localStorage.removeItem(`${diaActual}_check_${index}`);
-            });
+      function reiniciarDia() {
+         checks.forEach((check, index) => {
+         check.checked = false;
+           localStorage.removeItem(`${diaActual}_check_${index}`);
+  });
 
-            warning.style.display = 'none';
+        warning.style.display = 'none';
 }
     
 </script>
