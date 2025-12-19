@@ -182,11 +182,7 @@
 
     let progreso = parseInt(localStorage.getItem("diaDesbloqueado")) || 1;
 
-    if (DIA_ACTUAL > progreso) {
-      mensaje.innerHTML =
-        "🔒 Este regalo aún no está disponible.<br>Vuelve mañana ✨";
-      return;
-    }
+ 
 
     // Al cargar la página
     if (localStorage.getItem("regaloDiario") === hoy) {
@@ -212,7 +208,13 @@
       "🎁 Este es tu regalo del día " + DIA_ACTUAL;
 
     // Abrir regalo
-    function abrirCaja() {
+    function abrirCaja() 
+      if (DIA_ACTUAL > progreso) {
+       mensaje.innerHTML =
+        "🔒 Este regalo aún no está disponible.<br>Vuelve mañana ✨";
+        }
+        
+    {
       if (localStorage.getItem("regaloDiario") === hoy) return;
 
       localStorage.setItem("regaloDiario", hoy);
