@@ -173,7 +173,6 @@
   <script>
     /* 🔐 CONFIGURACIÓN DEL RETO */
     const DIA_ACTUAL = 12; // ← cambiar en cada página
-
     const hoy = new Date().toISOString().split("T")[0];
     const caja = document.getElementById("caja");
     const mensaje = document.getElementById("mensaje");
@@ -209,33 +208,39 @@
 
     // Abrir regalo
     function abrirCaja() 
-      if (DIA_ACTUAL > progreso) {
-       mensaje.innerHTML =
+     console.log("Día actual:", DIA_ACTUAL);
+     console.log("Progreso guardado:", progreso);
+     
+     // 🚫 BLOQUEO POR PROGRESO
+    if (DIA_ACTUAL > progreso) {
+      mensaje.innerHTML =
         "🔒 Este regalo aún no está disponible.<br>Vuelve mañana ✨";
-        }
-        
-    {
-      if (localStorage.getItem("regaloDiario") === hoy) return;
+    return; // ⛔ DETIENE TODO
+  }
 
-      localStorage.setItem("regaloDiario", hoy);
+    // 🚫 BLOQUEO SI YA ABRIÓ HOY
+    if (localStorage.getItem("regaloDiario") === hoy) return;
 
-      textoInicial.style.display = "none";
+    // ✅ ABRIR REGALO
+    localStorage.setItem("regaloDiario", hoy);
 
-      caja.src =
-        "https://drive.google.com/thumbnail?id=1UUXNNptnWth-ss2IJG0AhfoVk5pU0jCK&sz=w1000";
+    textoInicial.style.display = "none";
 
-      mensaje.innerHTML = `
-        <span class="icono-amarillo">
-          <i class="fa-solid fa-star"></i>
-        </span>
-        Este es tu regalo de hoy.<br>
-        Escúchalo con calma ✨
-      `;
+    caja.src =
+      "https://drive.google.com/thumbnail?id=1UUXNNptnWth-ss2IJG0AhfoVk5pU0jCK&sz=w1000";
 
-      audio.style.display = "block";
+    mensaje.innerHTML = `
+      <span class="icono-amarillo">
+        <i class="fa-solid fa-star"></i>
+      </span>
+      Este es tu regalo de hoy.<br>
+      Escúchalo con calma ✨
+    `;
 
-      lanzarParticulas();
-    }
+    audio.style.display = "block";
+
+    lanzarParticulas();
+}
 
     function lanzarParticulas() {
       const contenedor = document.getElementById("particulas");
