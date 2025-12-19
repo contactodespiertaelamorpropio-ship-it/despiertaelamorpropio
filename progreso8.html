@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -130,17 +129,21 @@
     </div>
 
     <script>
+        const diaActual = "dia11"; // 👈 CAMBIA ESTO EN CADA PÁGINA
         const checks = document.querySelectorAll('input[type="checkbox"]');
         const warning = document.getElementById('warning');
         const modal = document.getElementById('modal');
 
         // Cargar estado guardado
-        checks.forEach((check, index) => {
-            const saved = localStorage.getItem('check_' + index);
+      
+         checks.forEach((check, index) => {
+            const key = `${diaActual}_check_${index}`;
+            const saved = localStorage.getItem(key);
+
             if (saved === 'true') check.checked = true;
 
             check.addEventListener('change', () => {
-                localStorage.setItem('check_' + index, check.checked);
+                localStorage.setItem(key, check.checked);
             });
         });
 
@@ -163,7 +166,7 @@
         function reiniciarDia() {
             checks.forEach((check, index) => {
                 check.checked = false;
-                localStorage.removeItem('check_' + index);
+                localStorage.removeItem(`${diaActual}_check_${index}`);
             });
 
             warning.style.display = 'none';
