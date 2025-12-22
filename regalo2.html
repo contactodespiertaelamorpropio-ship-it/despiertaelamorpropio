@@ -136,19 +136,12 @@
 
 <div id="mensaje"></div>
 
-<audio id="audioRegalo1" controls>
-  <!-- REEMPLAZA ID_DEL_AUDIO -->
-  <source src="https://drive.google.com/uc?export=download&id=ID_DEL_AUDIO" type="audio/mpeg">
-  Tu navegador no soporta audio.
-</audio>
-
 <div id="particulas"></div>
 
 <script>
   const hoy = new Date().toISOString().split("T")[0];
   const caja = document.getElementById("caja");
   const mensaje = document.getElementById("mensaje");
-  const audio = document.getElementById("audioRegalo");
 
   // Al cargar
   if (localStorage.getItem("regaloDiario") === hoy) {
@@ -163,24 +156,48 @@
     mensaje.style.display = "block";
   }
 
-  function abrirCaja() {
-    if (localStorage.getItem("regaloDiario") === hoy) return;
+function abrirCaja() {
+  if (localStorage.getItem("regaloDiario") === hoy) return;
 
-    localStorage.setItem("regaloDiario", hoy);
+  localStorage.setItem("regaloDiario", hoy);
 
-    caja.onload = function () {
-      mensaje.innerHTML = `
-        <span class="icono-amarillo"><i class="fa-solid fa-star"></i></span>
-        Este es tu regalo de hoy.<br>
-        Escúchalo con calma
-      `;
-      mensaje.style.display = "block";
-      audio.style.display = "block";
-    };
+  caja.onload = function () {
+    mensaje.innerHTML = `
+      <span class="icono-amarillo"><i class="fa-solid fa-star"></i></span>
+      Este es tu regalo de hoy 💛
+      <br><br>
 
-    caja.src =
-      "https://drive.google.com/thumbnail?id=1DEL4n4_AdLWT9FMgAJ_Xq51ZQjBmBrL6&sz=w1000";
+      <strong>PASO 1 – Abrir el tablero</strong><br>
+      Abre el enlace del tablero en Google Slides<br>
+      Presiona <em>Archivo → Hacer una copia</em><br>
+      Guárdala en tu Google Drive
+      <br><br>
 
+      <a
+        href="https://docs.google.com/presentation/d/1eVpXqJB-e54H9e23GRkL-jmk3aoPt5FhbWk5HzGQ950/edit?usp=sharing"
+        target="_blank"
+        style="
+          display: inline-block;
+          margin-top: 12px;
+          padding: 12px 22px;
+          background: #FFD700;
+          color: #000;
+          font-weight: bold;
+          text-decoration: none;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        "
+      >
+        📂 Abrir tablero de amor propio
+      </a>
+    `;
+
+    mensaje.style.display = "block";
+  };
+
+  caja.src =
+    "https://drive.google.com/thumbnail?id=1DEL4n4_AdLWT9FMgAJ_Xq51ZQjBmBrL6&sz=w1000";
+  
     lanzarParticulas();
   }
 
