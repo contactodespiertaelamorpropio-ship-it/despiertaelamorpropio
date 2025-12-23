@@ -19,6 +19,7 @@
           height: 100%;
           pointer-events: none;
           overflow: hidden;
+          z-index: 10; /* asegura que quede encima */
       }
       
       .destello {
@@ -89,7 +90,8 @@
             max-width: 400px;
             text-align: center;
             border-radius: 10px;
-    <div class="destellos" id="destellos">
+            position: relative; /* ahora los destellos se posicionan respecto al modal */
+        <div class="destellos" id="destellos">
           <span class="destello">✨</span>
           <span class="destello">✨</span>
           <span class="destello">✨</span>
@@ -155,9 +157,28 @@
             <p style="color:#000;">
             Tu constancia está echando raíces.<br>
              Gracias por sostenerte.
+          </p>
+    
+      <!-- Destellos flotantes dentro del modal -->
+      <div class="destellos" id="destellos">
+          <span class="destello">✨</span>
+          <span class="destello">✨</span>
+          <span class="destello">✨</span>
+          <span class="destello">✨</span>
+      </div>
+      
+          <p>
+         <span class="icon-yellow">✨</span> Mañana continuamos <span class="icon-yellow">✨</span>
+      </p>
+      <button onclick="cerrarModal()">Cerrar</button>
+  </div>
+</div>
+                
             <p class="destello">
                <span class="icon-yellow">✨</span>Mañana continuamos<span class="icon-yellow">✨</span>
             </p>
+            
+            
             <button onclick="cerrarModal()">Cerrar</button>
         </div>
     </div>
