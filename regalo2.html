@@ -147,6 +147,7 @@
   if (localStorage.getItem("regaloDiario") === hoy) {
     caja.src =
       "https://drive.google.com/thumbnail?id=1DEL4n4_AdLWT9FMgAJ_Xq51ZQjBmBrL6&sz=w1000";
+    textoInicial.style.display = "none";
     mensaje.innerHTML = `
       <span class="icono-amarillo"><i class="fa-solid fa-moon"></i></span>
       Ya abriste tu regalo hoy.<br>
@@ -160,6 +161,7 @@ function abrirCaja() {
   if (localStorage.getItem("regaloDiario") === hoy) return;
 
   localStorage.setItem("regaloDiario", hoy);
+  textoInicial.style.display = "none";
 
   caja.onload = function () {
     mensaje.innerHTML = `
