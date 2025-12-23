@@ -17,6 +17,7 @@
             inset: 0;
             pointer-events: none;
             overflow: hidden;
+            z-index: 10; /* asegura que quede encima */
         }
 
         /* Destello individual */
@@ -92,6 +93,7 @@
             max-width: 400px;
             text-align: center;
             border-radius: 10px;
+            position: relative; /* ahora los destellos se posicionan respecto al modal */
         }
 
         .modal-content h2 {
