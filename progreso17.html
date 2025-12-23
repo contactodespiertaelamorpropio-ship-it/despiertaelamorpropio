@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Día de Amor Propio</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            color: #1a3c7c;
+        }
+
+        .check-item {
+            margin-bottom: 18px;
+        }
+
+        .check-item label {
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .check-item input:checked + label {
+            color: #08abbd;
+            font-weight: bold;
+        }
+
+        button {
+            background-color: #f7f00f;
+            border: none;
+            padding: 10px 18px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+
+        #warning {
+            margin-top: 15px;
+            color: #000;
+            display: none;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background: #fff;
+            margin: 15% auto;
+            padding: 25px;
+            width: 85%;
+            max-width: 400px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .modal-content h2 {
+            color: #ed15ea;
+            margin-bottom: 15px;
+        }
+
+        .icon-yellow { color: #f7f00f; }
+        .icon-red { color: #f70f36; }
+        .icon-green { color: #18e30e; }
+        .icon-orange { color: #f5480f; }
+    </style>
+</head>
+
+<body>
+
+    <h3 style="color:#9924f2;">Día 17 de Amor Propio</h3>
+
+    <div class="check-item">
+        <input type="checkbox" id="c1">
+        <label for="c1">Realicé el reto del día</label>
+    </div>
+
+    <div class="check-item">
+        <input type="checkbox" id="c2">
+        <label for="c2">Escribí mi gratitud</label>
+    </div>
+
+    <div class="check-item">
+        <input type="checkbox" id="c3">
+        <label for="c3">Me regalé un momento de meditación</label>
+    </div>
+
+    <div class="check-item">
+        <input type="checkbox" id="c4">
+        <label for="c4">Leí o repetí la afirmación</label>
+    </div>
+
+    <div class="check-item">
+        <input type="checkbox" id="c5">
+        <label for="c5">Observé el wallpaper con intención</label>
+    </div>
+
+    <div class="check-item">
+        <input type="checkbox" id="c6">
+        <label for="c6">Respondí la reflexión</label>
+    </div>
+
+    <button onclick="completarDia()">Día Conquistado!!</button>
+    <button onclick="reiniciarDia()">Reiniciar día</button>
+
+    <div id="warning">Selecciona al menos una casilla para avanzar en el día.</div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2><span class="icon-red">🌷</span>Avance logrado</h2>
+            <p style="color:#000;">
+              Estás sembrando amor propio.<br>
+              Con tiempo, florecerá.
+            <p class="destello">
+               <span class="icon-yellow">✨</span>Mañana seguimos<span class="icon-yellow">✨</span>
+            </p>
+            <button onclick="cerrarModal()">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        const diaActual = "dia17"; // 👈 CAMBIA ESTO EN CADA PÁGINA
+        const checks = document.querySelectorAll('input[type="checkbox"]');
+        const warning = document.getElementById('warning');
+        const modal = document.getElementById('modal');
+
+        // Cargar estado guardado
+      
+         checks.forEach((check, index) => {
+            const key = `${diaActual}_check_${index}`;
+            const saved = localStorage.getItem(key);
+
+            if (saved === 'true') check.checked = true;
+
+            check.addEventListener('change', () => {
+                localStorage.setItem(key, check.checked);
+            });
+        });
+
+        function completarDia() {
+            const algunoMarcado = Array.from(checks).some(c => c.checked);
+
+            if (!algunoMarcado) {
+                warning.style.display = 'block';
+                return;
+            }
+
+            warning.style.display = 'none';
+            modal.style.display = 'block';
+        }
+
+        function cerrarModal() {
+            modal.style.display = 'none';
+        }
+
+        function reiniciarDia() {
+            checks.forEach((check, index) => {
+                check.checked = false;
+                localStorage.removeItem(`${diaActual}_check_${index}`);
+            });
+
+            warning.style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
