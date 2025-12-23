@@ -10,51 +10,39 @@
             font-size: 14px;
             color: #1a3c7c;
         }
-     
-      /* Contenedor de destellos flotantes */
-      .destellos {
-          position: absolute;
-          inset: 0;
-          pointer-events: none;
-          overflow: hidden;
-      }
-      
-      /* Destello individual */
-      .destello {
-          position: absolute;
-          bottom: -20px;
-          font-size: 18px;
-          opacity: 0;
-          animation: flotar 3.5s ease-in-out infinite;
-      }
-      
-      /* Variaciones naturales */
-      .destello:nth-child(1) { left: 20%; animation-delay: 0s; }
-      .destello:nth-child(2) { left: 40%; animation-delay: 0.8s; }
-      .destello:nth-child(3) { left: 60%; animation-delay: 1.6s; }
-      .destello:nth-child(4) { left: 80%; animation-delay: 2.4s; }
-      
-      /* Animación flotante */
-      @keyframes flotar {
-          0% {
-              transform: translateY(0) scale(0.6);
-              opacity: 0;
-          }
-          20% {
-              opacity: 1;
-          }
-          50% {
-              transform: translateY(-120px) scale(1.2);
-              opacity: 1;
-          }
-          100% {
-              transform: translateY(-220px) scale(0.4);
-              opacity: 0;
-          }
-      }
-      </style>
 
-             .check-item {
+        /* Contenedor de destellos flotantes */
+        .destellos {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* Destello individual */
+        .destello {
+            position: absolute;
+            bottom: -20px;
+            font-size: 18px;
+            opacity: 0;
+            animation: flotar 3.5s ease-in-out infinite;
+        }
+
+        /* Variaciones naturales */
+        .destello:nth-child(1) { left: 20%; animation-delay: 0s; }
+        .destello:nth-child(2) { left: 40%; animation-delay: 0.8s; }
+        .destello:nth-child(3) { left: 60%; animation-delay: 1.6s; }
+        .destello:nth-child(4) { left: 80%; animation-delay: 2.4s; }
+
+        /* Animación flotante */
+        @keyframes flotar {
+            0% { transform: translateY(0) scale(0.6); opacity: 0; }
+            20% { opacity: 1; }
+            50% { transform: translateY(-120px) scale(1.2); opacity: 1; }
+            100% { transform: translateY(-220px) scale(0.4); opacity: 0; }
+        }
+
+        .check-item {
             margin-bottom: 18px;
         }
 
@@ -104,15 +92,9 @@
             max-width: 400px;
             text-align: center;
             border-radius: 10px;
-        <div class="destellos" id="destellos">
-            <span class="destello">✨</span>
-            <span class="destello">✨</span>
-            <span class="destello">✨</span>
-            <span class="destello">✨</span>
-        </div>
         }
 
-             .modal-content h2 {
+        .modal-content h2 {
             color: #ed15ea;
             margin-bottom: 15px;
         }
@@ -163,6 +145,14 @@
 
     <div id="warning">Selecciona al menos una casilla para avanzar en el día.</div>
 
+    <!-- Destellos flotantes -->
+    <div class="destellos" id="destellos">
+        <span class="destello">✨</span>
+        <span class="destello">✨</span>
+        <span class="destello">✨</span>
+        <span class="destello">✨</span>
+    </div>
+
     <!-- Modal -->
     <div id="modal" class="modal">
         <div class="modal-content">
@@ -170,6 +160,7 @@
             <p style="color:#000;">
               Elegirte también es sanarte.<br>
               Hoy lo hiciste.
+            </p>
             <p class="destello">
                <span class="icon-yellow">✨</span>✨ Mañana continuamos ✨<span class="icon-yellow">✨</span>
             </p>
@@ -178,19 +169,16 @@
     </div>
 
     <script>
-        const diaActual = "dia18"; // 👈 CAMBIA ESTO EN CADA PÁGINA
+        const diaActual = "dia18"; 
         const checks = document.querySelectorAll('input[type="checkbox"]');
         const warning = document.getElementById('warning');
         const modal = document.getElementById('modal');
 
         // Cargar estado guardado
-      
-         checks.forEach((check, index) => {
+        checks.forEach((check, index) => {
             const key = `${diaActual}_check_${index}`;
             const saved = localStorage.getItem(key);
-
             if (saved === 'true') check.checked = true;
-
             check.addEventListener('change', () => {
                 localStorage.setItem(key, check.checked);
             });
@@ -198,21 +186,18 @@
 
         function completarDia() {
             const algunoMarcado = Array.from(checks).some(c => c.checked);
-
             if (!algunoMarcado) {
                 warning.style.display = 'block';
                 return;
             }
-
             warning.style.display = 'none';
             modal.style.display = 'block';
 
-        // Reiniciar animación de destellos flotantes
+            // Reiniciar animación de destellos flotantes
             const destellos = document.getElementById('destellos');
             destellos.style.display = 'none';
             destellos.offsetHeight; // fuerza reinicio
             destellos.style.display = 'block';
-
         }
 
         function cerrarModal() {
@@ -224,7 +209,6 @@
                 check.checked = false;
                 localStorage.removeItem(`${diaActual}_check_${index}`);
             });
-
             warning.style.display = 'none';
         }
     </script>
