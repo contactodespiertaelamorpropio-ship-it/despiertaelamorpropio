@@ -10,36 +10,37 @@
             font-size: 14px;
             color: #1a3c7c;
         }
-      /* Destellos */
-      .destellos {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          pointer-events: none;
-          overflow: hidden;
-          z-index: 10; /* asegura que quede encima */
-      }
-      
-      .destello {
-          position: absolute;
-          font-size: 18px;
-          animation: brillar 2.5s ease-in-out infinite;
-          opacity: 0;
-      }
-      
-      .destello:nth-child(1) { top: 15%; left: 20%; animation-delay: 0s; }
-      .destello:nth-child(2) { top: 30%; left: 70%; animation-delay: 0.6s; }
-      .destello:nth-child(3) { top: 60%; left: 25%; animation-delay: 1.2s; }
-      .destello:nth-child(4) { top: 75%; left: 60%; animation-delay: 1.8s; }
-      
-      @keyframes brillar {
-          0% { transform: scale(0.5); opacity: 0; }
-          50% { transform: scale(1.4); opacity: 1; }
-          100% { transform: scale(0.5); opacity: 0; }
-      }
-            
+
+        /* Destellos */
+        .destellos {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 10; /* asegura que quede encima */
+        }
+        
+        .destello {
+            position: absolute;
+            font-size: 18px;
+            animation: brillar 2.5s ease-in-out infinite;
+            opacity: 0;
+        }
+        
+        .destello:nth-child(1) { top: 15%; left: 20%; animation-delay: 0s; }
+        .destello:nth-child(2) { top: 30%; left: 70%; animation-delay: 0.6s; }
+        .destello:nth-child(3) { top: 60%; left: 25%; animation-delay: 1.2s; }
+        .destello:nth-child(4) { top: 75%; left: 60%; animation-delay: 1.8s; }
+        
+        @keyframes brillar {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.4); opacity: 1; }
+            100% { transform: scale(0.5); opacity: 0; }
+        }
+              
         .check-item {
             margin-bottom: 18px;
         }
@@ -90,13 +91,7 @@
             max-width: 400px;
             text-align: center;
             border-radius: 10px;
-            position: relative; /* ahora los destellos se posicionan respecto al modal */
-        <div class="destellos" id="destellos">
-          <span class="destello">✨</span>
-          <span class="destello">✨</span>
-          <span class="destello">✨</span>
-          <span class="destello">✨</span>
-</div>
+            position: relative; /* los destellos se posicionan respecto al modal */
         }
 
         .modal-content h2 {
@@ -155,30 +150,21 @@
         <div class="modal-content">
             <h2><span class="icon-red">🌷</span>Nuevo hábito</h2>
             <p style="color:#000;">
-            Tu constancia está echando raíces.<br>
-             Gracias por sostenerte.
-          </p>
-    
-      <!-- Destellos flotantes dentro del modal -->
-      <div class="destellos" id="destellos">
-          <span class="destello">✨</span>
-          <span class="destello">✨</span>
-          <span class="destello">✨</span>
-          <span class="destello">✨</span>
-      </div>
-      
-          <p>
-         <span class="icon-yellow">✨</span> Mañana continuamos <span class="icon-yellow">✨</span>
-      </p>
-      <button onclick="cerrarModal()">Cerrar</button>
-  </div>
-</div>
-                
-            <p class="destello">
-               <span class="icon-yellow">✨</span>Mañana continuamos<span class="icon-yellow">✨</span>
+                Tu constancia está echando raíces.<br>
+                Gracias por sostenerte.
             </p>
+        
+            <!-- Destellos flotantes dentro del modal -->
+            <div class="destellos" id="destellos">
+                <span class="destello">✨</span>
+                <span class="destello">✨</span>
+                <span class="destello">✨</span>
+                <span class="destello">✨</span>
+            </div>
             
-            
+            <p>
+                <span class="icon-yellow">✨</span> Mañana continuamos <span class="icon-yellow">✨</span>
+            </p>
             <button onclick="cerrarModal()">Cerrar</button>
         </div>
     </div>
@@ -190,8 +176,7 @@
         const modal = document.getElementById('modal');
 
         // Cargar estado guardado
-      
-         checks.forEach((check, index) => {
+        checks.forEach((check, index) => {
             const key = `${diaActual}_check_${index}`;
             const saved = localStorage.getItem(key);
 
