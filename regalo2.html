@@ -129,7 +129,7 @@
   onclick="abrirCaja()"
 >
 
-<div class="texto">
+<div class="texto" id="texto-inicial">
   <i class="fa-solid fa-gift regalo"></i>
   Toca la caja para recibir tu regalo de hoy
 </div>
@@ -141,7 +141,7 @@
 <script>
   const hoy = new Date().toISOString().split("T")[0];
   const caja = document.getElementById("caja");
-  const mensaje = document.getElementById("mensaje");
+  const textoInicial = document.getElementById("texto-inicial");
 
   // Al cargar
   if (localStorage.getItem("regaloDiario") === hoy) {
