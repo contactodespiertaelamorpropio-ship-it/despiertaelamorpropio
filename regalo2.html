@@ -105,12 +105,18 @@
 <div id="mensaje"></div>
 
 <script>
+const ID_REGALO = "dia02"; // 👈 cambia esto por dia02, dia03, etc.
 const hoy = new Date().toISOString().split("T")[0];
+  
 const caja = document.getElementById("caja");
 const mensaje = document.getElementById("mensaje");
 const textoInicial = document.getElementById("texto-inicial");
 
+const claveStorage = "regaloDiario_" + ID_REGALO;
+  
 const enlaceHTML = `
+
+
 <a
   href="https://drive.google.com/file/d/1Aus8-PaPcL9OxaX3kYFa8Bp9N4UjmP2X/view?usp=sharing"
   target="_blank"
@@ -136,12 +142,12 @@ if (localStorage.getItem("regaloDiario") === hoy) {
 function abrirCaja() {
   textoInicial.style.display = "none";
 
-  if (localStorage.getItem("regaloDiario") === hoy) {
+  if (localStorage.getItem(claveStorage) === hoy) {
     mensaje.style.display = "block";
     return;
   }
 
-  localStorage.setItem("regaloDiario", hoy);
+  localStorage.setItem(claveStorage, hoy);;
   localStorage.setItem("enlaceMostrado", "true");
 
   caja.src = "https://drive.google.com/thumbnail?id=1r8rSH7LoO3PmE_Ucw4Ow3mCE-nrPyQzs&sz=w1000";
