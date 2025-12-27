@@ -105,10 +105,19 @@
 <div id="mensaje"></div>
 
 <script>
+const DIA_CAJA = 1; // 🔁 CAMBIA EN CADA CAJA (1,2,3...)
 const hoy = new Date().toISOString().split("T")[0];
+  
 const caja = document.getElementById("caja");
 const mensaje = document.getElementById("mensaje");
 const textoInicial = document.getElementById("texto-inicial");
+
+const CLAVE_CAJA = "caja_abierta_" + DIA_CAJA;
+const CLAVE_PROGRESO = "ultimo_dia_abierto";
+
+// 🔒 VERIFICAR SI ESTA CAJA ESTÁ BLOQUEADA
+const ultimoDia = parseInt(localStorage.getItem(CLAVE_PROGRESO)) || 0;
+const cajaBloqueada = DIA_CAJA !== 1 && ultimoDia < DIA_CAJA - 1;  
 
 const enlaceHTML = `
 <a
@@ -121,9 +130,10 @@ const enlaceHTML = `
 `;
 
 // AL CARGAR
-if (localStorage.getItem("regaloDiario") === hoy) {
+if (localStorage.getItem(CLAVE_CAJA) === hoy) {
   caja.src = "https://drive.google.com/thumbnail?id=1DEL4n4_AdLWT9FMgAJ_Xq51ZQjBmBrL6&sz=w1000";
   textoInicial.style.display = "none";
+  
   mensaje.innerHTML = `
     <span class="icono-amarillo"><i class="fa-solid fa-moon"></i></span>
     Ya abriste tu regalo hoy.<br><br>
@@ -136,18 +146,24 @@ if (localStorage.getItem("regaloDiario") === hoy) {
 function abrirCaja() {
   textoInicial.style.display = "none";
 
-  if (localStorage.getItem("regaloDiario") === hoy) {
+  if (cajaBloqueada) return;
+
+  if (localStorage.getItem(CLAVE_CAJA) === hoy) {
     mensaje.style.display = "block";
     return;
   }
 
-  localStorage.setItem("regaloDiario", hoy);
-  localStorage.setItem("enlaceMostrado", "true");
+    // GUARDAR APERTURA
+    localStorage.setItem(CLAVE_CAJA, hoy);
+    localStorage.setItem(CLAVE_PROGRESO, DIA_CAJA);
 
-  caja.src = "https://drive.google.com/thumbnail?id=1DEL4n4_AdLWT9FMgAJ_Xq51ZQjBmBrL6&sz=w1000";
+    caja.src = "https://drive.google.com/thumbnail?id=1DEL4n4_AdLWT9FMgAJ_Xq51ZQjBmBrL6&sz=w1000";
+    textoInicial.style.display = "none";
 
   mensaje.innerHTML = `
+    ✨ Has desbloqueado el día ${DIA_CAJA} ✨<br><br>
     <span class="destellos-amarillos"> ✨</span>Este es tu regalo de hoy<span class="destellos-amarillos">✨</span><br><br>
+      
 
     <span class="titulo-fucsia">
       TABLERO DE CARTAS COLECCIONABLES
