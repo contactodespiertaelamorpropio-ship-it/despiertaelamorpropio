@@ -44,6 +44,9 @@
   .corazon-rojo {
     color: #e60000;
   }
+   .regalo-rojo {
+    color: #e60000;
+  }
 
   .boton {
     display: inline-block;
@@ -61,6 +64,23 @@
     color: #FFD700;
     margin: 0 4px;
   }
+  
+  .destellos-amarillos {
+    color: #FFD700;
+    font-size: 18px;
+    animation: brillar 1.6s infinite alternate;
+}
+
+@keyframes brillar {
+  from {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
 </style>
 </head>
 
@@ -75,7 +95,7 @@
 >
 
 <div class="texto" id="texto-inicial">
- <span class="caja-red">🎁</span>Toca la caja para recibir tu regalo de hoy
+ <span class="reaglo-rojo">🎁</span>Toca la caja para recibir tu regalo de hoy
 </div>
 
 <div id="mensaje"></div>
