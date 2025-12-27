@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Caja Sorpresa Diaria</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #fff;
+    margin: 0;
+    padding: 40px 20px;
+  }
+
+  .caja {
+    width: 200px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  .caja:hover { transform: scale(1.05); }
+
+  .texto {
+    margin-top: 12px;
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  #mensaje {
+    margin-top: 18px;
+    font-size: 14px;
+    display: none;
+    line-height: 1.5;
+  }
+
+  .titulo-fucsia {
+    color: #d100a6;
+    font-weight: bold;
+  }
+
+  .corazon-rojo {
+    color: #e60000;
+  }
+  
+  .regalo-rojo {
+    color: #e60000;
+    font-size: 22px;
+    margin-right: 4px;
+  }
+
+  .boton {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 12px 22px;
+    background: #002aff;
+    color: #000;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  }
+
+  .icono-amarillo i {
+    color: #FFD700;
+    margin: 0 4px;
+  }
+  
+  .destellos-amarillos {
+    color: #FFD700;
+    font-size: 18px;
+    animation: brillar 1.6s infinite alternate;
+}
+
+@keyframes brillar {
+  from {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<img
+  src="https://drive.google.com/thumbnail?id=10ITpfZNzYLaWw4miZafubdeQ5mUqkRqz&sz=w1000"
+  id="caja"
+  class="caja"
+  alt="Caja sorpresa"
+  onclick="abrirCaja()"
+>
+
+<div class="texto" id="texto-inicial">
+ <span class="regalo-rojo">🎁</span>
+  Toca la caja para recibir tu regalo de hoy
+</div>
+
+<div id="mensaje"></div>
+
+<script>
+const hoy = new Date().toISOString().split("T")[0];
+const caja = document.getElementById("caja");
+const mensaje = document.getElementById("mensaje");
+const textoInicial = document.getElementById("texto-inicial");
+
+const enlaceHTML = `
+<a
+  href="https://drive.google.com/file/d/1Aus8-PaPcL9OxaX3kYFa8Bp9N4UjmP2X/view?usp=sharing"
+  target="_blank"
+  class="boton"
+>
+ 💌 Abrir carta del día
+</a>
+`;
+
+// AL CARGAR
+if (localStorage.getItem("regaloDiario") === hoy) {
+  caja.src = "https://drive.google.com/thumbnail?id=1r8rSH7LoO3PmE_Ucw4Ow3mCE-nrPyQzs&sz=w1000";
+  textoInicial.style.display = "none";
+  mensaje.innerHTML = `
+    <span class="icono-amarillo"><i class="fa-solid fa-moon"></i></span>
+    Ya abriste tu regalo hoy.<br><br>
+    ${enlaceHTML}
+  `;
+  mensaje.style.display = "block";
+}
+
+// FUNCIÓN ABRIR
+function abrirCaja() {
+  textoInicial.style.display = "none";
+
+  if (localStorage.getItem("regaloDiario") === hoy) {
+    mensaje.style.display = "block";
+    return;
+  }
+
+  localStorage.setItem("regaloDiario", hoy);
+  localStorage.setItem("enlaceMostrado", "true");
+
+  caja.src = "https://drive.google.com/thumbnail?id=1r8rSH7LoO3PmE_Ucw4Ow3mCE-nrPyQzs&sz=w1000";
+
+  mensaje.innerHTML = `
+    <span class="destellos-amarillos"> ✨</span>Este es tu regalo de hoy<span class="destellos-amarillos">✨</span><br><br>
+
+    <span class="titulo-fucsia">
+     💌 PRIMERA CARTA COLECCIONABLE
+    </span><br>
+    “Carta1, amor propio, dormido”
+    <span class="corazon-rojo">💛</span>
+    <br><br>
+
+    <strong>PASO 1 – Abrir la imagen</strong><br>
+    Archivo → Hacer una copia<<br>
+    Guarda esa copia en tu Google Drive.<em>
+    Abre tu tablero digital (Google Slides)</em><br>
+    En el tablero, presiona Insertar → Imagen → Drive.<br>
+    Selecciona la copia de tu carta y agrégala al tablero.<br>
+    Ajusta el tamaño y colócala en el espacio que prefieras.<br>
+    🌸 Este tablero es tuyo. No hay forma correcta o incorrecta.<br>
+
+    ${enlaceHTML}
+  `;
+
+  mensaje.style.display = "block";
+}
+</script>
+
+</body>
+</html>
