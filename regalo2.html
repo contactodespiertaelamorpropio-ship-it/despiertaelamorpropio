@@ -90,7 +90,7 @@
 <body>
 
 <img
-  src="https://drive.google.com/thumbnail?id=10ITpfZNzYLaWw4miZafubdeQ5mUqkRqz&sz=w1000"
+  src="https://drive.google.com/thumbnail?id=1r8rSH7LoO3PmE_Ucw4Ow3mCE-nrPyQzs&sz=w1000"
   id="caja"
   class="caja"
   alt="Caja sorpresa"
@@ -128,7 +128,7 @@ const enlaceHTML = `
 
 // AL CARGAR
 if (localStorage.getItem("regaloDiario") === hoy) {
-  caja.src = "https://drive.google.com/thumbnail?id=1r8rSH7LoO3PmE_Ucw4Ow3mCE-nrPyQzs&sz=w1000";
+  caja.src = "https://drive.google.com/thumbnail?id=10ITpfZNzYLaWw4miZafubdeQ5mUqkRqz&sz=w1000";
   textoInicial.style.display = "none";
   mensaje.innerHTML = `
     <span class="icono-amarillo"><i class="fa-solid fa-moon"></i></span>
@@ -150,7 +150,7 @@ function abrirCaja() {
   localStorage.setItem(claveStorage, hoy);;
   localStorage.setItem("enlaceMostrado", "true");
 
-  caja.src = "https://drive.google.com/thumbnail?id=1r8rSH7LoO3PmE_Ucw4Ow3mCE-nrPyQzs&sz=w1000";
+  caja.src = "https://drive.google.com/thumbnail?id=10ITpfZNzYLaWw4miZafubdeQ5mUqkRqz&sz=w1000";
 
   mensaje.innerHTML = `
     <span class="destellos-amarillos"> ✨</span>Este es tu regalo de hoy<span class="destellos-amarillos">✨</span><br><br>
