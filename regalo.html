@@ -4,10 +4,15 @@
 <meta charset="UTF-8">
 <title>Caja Sorpresa Diaria</title>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
   body {
     font-family: Arial, sans-serif;
     text-align: center;
+    background: #fff;
+    margin: 0;
+    padding: 40px 20px;
   }
 
   .caja {
@@ -16,89 +21,166 @@
     transition: transform 0.3s ease;
   }
 
-  .caja:hover {
-    transform: scale(1.05);
-  }
+  .caja:hover { transform: scale(1.05); }
 
   .texto {
-    margin-top: 10px;
+    margin-top: 12px;
     font-weight: bold;
-    color: #555;
+    font-size: 16px;
   }
 
   #mensaje {
-    margin-top: 15px;
+    margin-top: 18px;
     font-size: 14px;
-    color: #777;
     display: none;
+    line-height: 1.5;
   }
 
-  audio {
-    margin-top: 15px;
-    width: 100%;
-    display: none;
+  .titulo-fucsia {
+    color: #d100a6;
+    font-weight: bold;
   }
+
+  .corazon-rojo {
+    color: #e60000;
+  }
+  
+  .regalo-rojo {
+    color: #e60000;
+    font-size: 22px;
+    margin-right: 4px;
+  }
+
+  .boton {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 12px 22px;
+    background: #FFD700;
+    color: #000;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  }
+
+  .icono-amarillo i {
+    color: #FFD700;
+    margin: 0 4px;
+  }
+  
+  .destellos-amarillos {
+    color: #FFD700;
+    font-size: 18px;
+    animation: brillar 1.6s infinite alternate;
+}
+
+@keyframes brillar {
+  from {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
 </style>
 </head>
 
 <body>
 
-<img 
-  src="https://drive.google.com/thumbnail?id=1k_sTDQWqEc-6lmX069cWV2M-2fvTnPOJ&sz=w1000"
+<img
+  src="https://drive.google.com/thumbnail?id=1fNK4Spar9Hn56SH_izho5GeIcx_vF3on&sz=w1000"
   id="caja"
   class="caja"
+  alt="Caja sorpresa"
   onclick="abrirCaja()"
-  alt="Caja sorpresa">
+>
 
-<!-- Modal -->
- <div id="modal" class="modal">
-   <div class="modal-content">
-      <h2><span class="icon-red"> 🎁 </span> Toca la caja para recibir tu regalo de hoy!</h2>
-  </div>
+<div class="texto" id="texto-inicial">
+ <span class="regalo-rojo">🎁</span>
+  Toca la caja para recibir tu regalo de hoy
+</div>
 
 <div id="mensaje"></div>
 
-<audio id="audioRegalo" controls>
-  <source src="https://drive.google.com/uc?export=download&id=ID_DEL_AUDIO" type="audio/mpeg">
-  Tu navegador no soporta audio.
-</audio>
-
 <script>
-  const hoy = new Date().toISOString().split('T')[0];
-  const caja = document.getElementById("caja");
-  const mensaje = document.getElementById("mensaje");
-  const audio = document.getElementById("audioRegalo");
+const DIA_CAJA = 1; // 🔁 CAMBIA EN CADA CAJA (1,2,3...)
+const hoy = new Date().toISOString().split("T")[0];
+  
+const caja = document.getElementById("caja");
+const mensaje = document.getElementById("mensaje");
+const textoInicial = document.getElementById("texto-inicial");
 
-  // AL CARGAR LA PÁGINA
-  if (localStorage.getItem("regaloDiario") === hoy) {
-    caja.src =
-      "https://drive.google.com/thumbnail?id=1UUXNNptnWth-ss2IJG0AhfoVk5pU0jCK&sz=w1000";
-    mensaje.innerHTML = "🌙 Ya abriste tu regalo hoy.<br>Vuelve mañana ✨";
+const CLAVE_CAJA = "caja_abierta_" + DIA_CAJA;
+const CLAVE_PROGRESO = "ultimo_dia_abierto";
+
+// 🔒 VERIFICAR SI ESTA CAJA ESTÁ BLOQUEADA
+const ultimoDia = parseInt(localStorage.getItem(CLAVE_PROGRESO)) || 0;
+const cajaBloqueada = DIA_CAJA !== 1 && ultimoDia < DIA_CAJA - 1;  
+
+// 🔗 SOLO BOTÓN PARA ABRIR EN GOOGLE SLIDES
+const enlaceHTML = `
+<a
+  href="https://docs.google.com/presentation/d/1eVpXqJB-e54H9e23GRkL-jmk3aoPt5FhbWk5HzGQ950/edit?usp=sharing"
+  target="_blank"
+  class="boton"
+>
+📂 Abrir tablero de amor propio
+</a>
+`;
+
+// AL CARGAR
+if (localStorage.getItem(CLAVE_CAJA) === hoy) {
+  caja.src = "https://drive.google.com/thumbnail?id=1DEL4n4_AdLWT9FMgAJ_Xq51ZQjBmBrL6&sz=w1000";
+  textoInicial.style.display = "none";
+  
+  mensaje.innerHTML = `
+    <span class="icono-amarillo"><i class="fa-solid fa-moon"></i></span>
+    Ya abriste tu regalo hoy.<br><br>
+    ${enlaceHTML}
+  `;
+  mensaje.style.display = "block";
+}
+
+// FUNCIÓN ABRIR
+function abrirCaja() {
+  textoInicial.style.display = "none";
+
+  if (cajaBloqueada) return;
+
+  if (localStorage.getItem(CLAVE_CAJA) === hoy) {
     mensaje.style.display = "block";
+    return;
   }
 
-  function abrirCaja() {
-    // Si ya abrió hoy, no mostrar audio
-    if (localStorage.getItem("regaloDiario") === hoy) {
-      mensaje.innerHTML = "🌙 Ya abriste tu regalo hoy.<br>Vuelve mañana ✨";
-      mensaje.style.display = "block";
-      return;
-    }
+    // GUARDAR APERTURA
+    localStorage.setItem(CLAVE_CAJA, hoy);
+    localStorage.setItem(CLAVE_PROGRESO, DIA_CAJA);
 
-    // Marcar como abierto hoy
-    localStorage.setItem("regaloDiario", hoy);
+    caja.src = "https://drive.google.com/thumbnail?id=1DEL4n4_AdLWT9FMgAJ_Xq51ZQjBmBrL6&sz=w1000";
+    textoInicial.style.display = "none";
 
-    // Esperar a que cargue la imagen abierta
-    caja.onload = function () {
-      mensaje.innerHTML = "✨ Este es tu regalo de hoy.<br>Escúchalo con calma 💛";
-      mensaje.style.display = "block";
-      audio.style.display = "block";
-    };
+  mensaje.innerHTML = `
+   <span class="destellos-amarillos"> ✨</span>Has desbloqueado el día ${DIA_CAJA}<span class="destellos-amarillos">✨</span><br><br>
+      
+    <span class="titulo-fucsia">
+      TABLERO DE CARTAS COLECCIONABLES
+    </span><br>
+    “Tu colección de amor propio”
+    <span class="corazon-rojo">💛</span>
+    <br><br>
 
-    // Cambiar a caja abierta
-    caja.src =
-      "https://drive.google.com/thumbnail?id=1UUXNNptnWth-ss2IJG0AhfoVk5pU0jCK&sz=w1000";
-  }
+    <strong>PASO 1 – Abrir el tablero</strong><br>
+    Abre el enlace del tablero en Google Slides<br>
+    Presiona <em>Archivo → Hacer una copia</em><br>
+    Guárdala en tu Google Drive.<br><br>
+
+    ${enlaceHTML}
+  `;
+
+  mensaje.style.display = "block";
+}
 </script>
 
 </body>
