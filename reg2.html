@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -90,7 +91,7 @@
 <body>
 
 <img
-  src="https://drive.google.com/thumbnail?id=1fNK4Spar9Hn56SH_izho5GeIcx_vF3on&sz=w1000"
+  src="https://drive.google.com/thumbnail?id=1r8rSH7LoO3PmE_Ucw4Ow3mCE-nrPyQzs&sz=w1000"
   id="caja"
   class="caja"
   alt="Caja sorpresa"
@@ -99,13 +100,13 @@
 
 <div class="texto" id="texto-inicial">
  <span class="regalo-rojo">🎁</span>
-  Toca la caja para recibir tu regalo de hoy
+  Toca la caja para recibir tu sorpressa de hoy
 </div>
 
 <div id="mensaje"></div>
 
 <script>
-const DIA_CAJA = 1; // 🔁 CAMBIA EN CADA CAJA (1,2,3...)
+const DIA_CAJA = 2; // 🔁 CAMBIA EN CADA CAJA (1,2,3...)
 const hoy = new Date().toISOString().split("T")[0];
   
 const caja = document.getElementById("caja");
@@ -119,19 +120,20 @@ const CLAVE_PROGRESO = "ultimo_dia_abierto";
 const ultimoDia = parseInt(localStorage.getItem(CLAVE_PROGRESO)) || 0;
 const cajaBloqueada = DIA_CAJA !== 1 && ultimoDia < DIA_CAJA - 1;  
 
+// 🔗 SOLO BOTÓN PARA ABRIR EN GOOGLE SLIDES
 const enlaceHTML = `
 <a
-  href="https://docs.google.com/presentation/d/1eVpXqJB-e54H9e23GRkL-jmk3aoPt5FhbWk5HzGQ950/edit?usp=sharing"
+  href="https://drive.google.com/file/d/1Aus8-PaPcL9OxaX3kYFa8Bp9N4UjmP2X/view?usp=sharing"
   target="_blank"
   class="boton"
 >
-📂 Abrir tablero de amor propio
+  Abrir carta del día
 </a>
 `;
 
 // AL CARGAR
 if (localStorage.getItem(CLAVE_CAJA) === hoy) {
-  caja.src = "https://drive.google.com/thumbnail?id=1DEL4n4_AdLWT9FMgAJ_Xq51ZQjBmBrL6&sz=w1000";
+  caja.src = "https://drive.google.com/thumbnail?id=10ITpfZNzYLaWw4miZafubdeQ5mUqkRqz&sz=w1000";
   textoInicial.style.display = "none";
   
   mensaje.innerHTML = `
@@ -157,24 +159,26 @@ function abrirCaja() {
     localStorage.setItem(CLAVE_CAJA, hoy);
     localStorage.setItem(CLAVE_PROGRESO, DIA_CAJA);
 
-    caja.src = "https://drive.google.com/thumbnail?id=1DEL4n4_AdLWT9FMgAJ_Xq51ZQjBmBrL6&sz=w1000";
+    caja.src = "https://drive.google.com/thumbnail?id=10ITpfZNzYLaWw4miZafubdeQ5mUqkRqz&sz=w1000";
     textoInicial.style.display = "none";
 
   mensaje.innerHTML = `
    <span class="destellos-amarillos"> ✨</span>Has desbloqueado el día ${DIA_CAJA}<span class="destellos-amarillos">✨</span><br><br>
       
-
     <span class="titulo-fucsia">
-      TABLERO DE CARTAS COLECCIONABLES
+       PRIMERA CARTA COLECCIONABLE
     </span><br>
-    “Tu colección de amor propio”
+    “Carta1, amor propio, dormido”
     <span class="corazon-rojo">💛</span>
     <br><br>
 
-    <strong>PASO 1 – Abrir el tablero</strong><br>
-    Abre el enlace del tablero en Google Slides<br>
-    Presiona <em>Archivo → Hacer una copia</em><br>
-    Guárdala en tu Google Drive.<br><br>
+    <strong>PASO 1 – ASO 1 – Abrir la imagen</strong><br>
+    Archivo → Hacer una copia<<br>
+    Guarda esa copia en tu Google Drive.<em>
+    Abre tu tablero digital (Google Slides)</em><br>
+    En el tablero, presiona Insertar → Imagen → Drive.<br>
+    Selecciona la copia de tu carta y agrégala al tablero.<br>
+    Ajusta el tamaño y colócala en el espacio que prefieras.<br>
 
     ${enlaceHTML}
   `;
