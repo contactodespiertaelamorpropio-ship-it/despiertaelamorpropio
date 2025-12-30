@@ -195,7 +195,18 @@ function abrirCaja() {
      ${enlaceHTML}
     `;
 
-  mensaje.innerHTML = contenidoHTML;
+  mensaje.innerHTML = ""; // Limpia el contenido
+
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = contenidoHTML;
+  mensaje.appendChild(tempDiv);
+  
+  // 🔥 Activar animación en el botón
+  const boton = tempDiv.querySelector(".boton");
+  if (boton) {
+    boton.classList.add("boton-animado");
+  }
+
 
   if (!yaAbierta) {
     localStorage.setItem(CLAVE_CAJA, hoy);
