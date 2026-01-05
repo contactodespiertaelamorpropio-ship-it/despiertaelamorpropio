@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Caja Sorpresa Diaria</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #fff;
+    margin: 0;
+    padding: 40px 20px;
+  }
+
+  .caja {
+    width: 200px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  .caja:hover { transform: scale(1.05); }
+
+  .texto {
+    margin-top: 12px;
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  #mensaje {
+    margin-top: 18px;
+    font-size: 14px;
+    display: none;
+    line-height: 1.5;
+  }
+
+  .titulo-fucsia {
+    color: #d100a6;
+    font-weight: bold;
+  }
+
+  .corazon-rojo {
+    color: #e60000;
+  }
+  
+  .regalo-rojo {
+    color: #e60000;
+    font-size: 22px;
+    margin-right: 4px;
+  }
+
+  .boton {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 12px 22px;
+    background: #FFD700;
+    color: #000;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  }
+
+  .icono-amarillo i {
+    color: #FFD700;
+    margin: 0 4px;
+  }
+  
+  .destellos-amarillos {
+    color: #FFD700;
+    font-size: 18px;
+    animation: brillar 1.6s infinite alternate;
+}
+
+@keyframes brillar {
+  from {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+} /* ← faltaba este cierre */
+
+.boton-animado {
+  animation: aparecerMagico 1.2s ease-out forwards;
+  transform: scale(0.8);
+  opacity: 0;
+}
+
+@keyframes aparecerMagico {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }  
+}
+</style>
+</head>
+
+<body>
+
+<img
+  src="https://drive.google.com/thumbnail?id=1wKu7hx3DVNfEqIopDbMnfd9J_vkhD3fj&sz=w1000"
+  id="caja"
+  class="caja"
+  alt="Caja sorpresa"
+  onclick="abrirCaja()"
+>
+
+<div class="texto" id="texto-inicial">
+ <span class="regalo-rojo">🎉</span>
+  Toca el cofre para recibir tu regalo de hoy
+</div>
+
+<div id="mensaje"></div>
+
+<script>
+const DIA_CAJA = 4; // 🔁 CAMBIA EN CADA CAJA (1,2,3...)
+const hoy = new Date().toISOString().split("T")[0];
+  
+const caja = document.getElementById("caja");
+const mensaje = document.getElementById("mensaje");
+const textoInicial = document.getElementById("texto-inicial");
+
+const CLAVE_CAJA = "caja_abierta_" + DIA_CAJA;
+const CLAVE_PROGRESO = "ultimo_dia_abierto";
+
+// 🔒 VERIFICAR SI ESTA CAJA ESTÁ BLOQUEADA
+const ultimoDia = parseInt(localStorage.getItem(CLAVE_PROGRESO)) || 0;
+const cajaBloqueada = DIA_CAJA !== 1 && ultimoDia < DIA_CAJA - 1;  
+
+// 🔗 SOLO BOTÓN PARA ABRIR 
+const enlaceHTML = `
+<a
+  href="https://drive.google.com/file/d/1f8SAAd5ZJ5Grjy1oIanYCscfVZbTeXEe/view?usp=drive_link"
+  target="_blank"
+  class="boton boton-animado"
+>
+Escuchar melodía del día
+</a>
+`;
+
+// AL CARGAR
+if (localStorage.getItem(CLAVE_CAJA) === hoy) {
+  caja.src = "https://drive.google.com/thumbnail?id=1KbiZdr-7OfUyzbvKg52zSFEkQgdR2bB_&sz=w1000";
+  textoInicial.style.display = "none";
+  
+  mensaje.innerHTML = `
+    <span class="icono-amarillo"><i class="fa-solid fa-moon"></i></span>
+    Ya abriste tu regalo hoy.<br><br>
+    ${enlaceHTML}
+  `;
+  mensaje.style.display = "block";
+}
+
+function abrirCaja() {
+  textoInicial.style.display = "none";
+
+  if (cajaBloqueada) return;
+
+  const yaAbierta = localStorage.getItem(CLAVE_CAJA) === hoy;
+
+  const contenidoHTML = yaAbierta
+    ? `
+      <span class="icono-amarillo"><i class="fa-solid fa-moon"></i></span>
+      Ya abriste tu regalo hoy.<br><br>
+      ${enlaceHTML}
+    `
+    : `
+      <span class="destellos-amarillos"> ✨</span>Has desbloqueado el día ${DIA_CAJA}<span class="destellos-amarillos">✨</span><br><br>
+
+      <span class="titulo-fucsia">
+       ESCUCHA ESTA MELODIA EL DÍA DE  HOY
+      </span><br>
+      “Una melodía suave para volver a ti.”
+      <span class="corazon-rojo">💛</span>
+      <br><br>
+
+      <strong></strong><br>
+      <<br>
+      <br><br>
+       
+     ${enlaceHTML}
+    `;
+
+  mensaje.innerHTML = ""; // Limpia el contenido
+
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = contenidoHTML;
+  mensaje.appendChild(tempDiv);
+  
+  // 🔥 Activar animación en el botón
+  const boton = tempDiv.querySelector(".boton");
+  if (boton) {
+    boton.classList.add("boton-animado");
+  }
+
+
+  if (!yaAbierta) {
+    localStorage.setItem(CLAVE_CAJA, hoy);
+    localStorage.setItem(CLAVE_PROGRESO, DIA_CAJA);
+    caja.src = "https://drive.google.com/thumbnail?id=1KbiZdr-7OfUyzbvKg52zSFEkQgdR2bB_&sz=w1000";
+  }
+
+  // ✨ Animación mágica al mostrar el mensaje
+  mensaje.style.opacity = 0;
+  mensaje.style.display = "block";
+  setTimeout(() => {
+    mensaje.style.transition = "opacity 1s ease-in-out";
+    mensaje.style.opacity = 1;
+  }, 50);
+}
+
+</script>
+
+</body>
+</html>
