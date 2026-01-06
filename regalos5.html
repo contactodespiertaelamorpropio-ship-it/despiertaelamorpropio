@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -113,22 +111,22 @@
 <body>
 
 <img
-  src="https://drive.google.com/thumbnail?id=1wKu7hx3DVNfEqIopDbMnfd9J_vkhD3fj&sz=w1000"
-  id="caja"
+  src="https://drive.google.com/thumbnail?id=1yHcYTiBd977wu5ZrAfq24_xl_bMWZa3y&sz=w1000"
+    id="caja"
   class="caja"
   alt="Caja sorpresa"
   onclick="abrirCaja()"
 >
 
 <div class="texto" id="texto-inicial">
- <span class="regalo-rojo">🎉</span>
-  Toca el cofre para recibir tu regalo de hoy
+ <span class="regalo-rojo">✉️</span>
+  Toca el sobre para recibir tu regalo de hoy
 </div>
 
 <div id="mensaje"></div>
 
 <script>
-const DIA_CAJA = 4; // 🔁 CAMBIA EN CADA CAJA (1,2,3...)
+const DIA_CAJA = 5; // 🔁 CAMBIA EN CADA CAJA (1,2,3...)
 const hoy = new Date().toISOString().split("T")[0];
   
 const caja = document.getElementById("caja");
@@ -156,7 +154,7 @@ Abrir cuento del día
 
 // AL CARGAR
 if (localStorage.getItem(CLAVE_CAJA) === hoy) {
-  caja.src = "https://drive.google.com/thumbnail?id=1KbiZdr-7OfUyzbvKg52zSFEkQgdR2bB_&sz=w1000";
+  caja.src = "https://drive.google.com/thumbnail?id=19uCar5rybV0YHiX-P3NhGhsYXNmxJW4z&sz=w1000";
   textoInicial.style.display = "none";
   
   mensaje.innerHTML = `
@@ -184,15 +182,15 @@ function abrirCaja() {
       <span class="destellos-amarillos"> ✨</span>Has desbloqueado el día ${DIA_CAJA}<span class="destellos-amarillos">✨</span><br><br>
 
       <span class="titulo-fucsia">
-       ESCUCHA ESTA MELODIA EL DÍA DE  HOY
+       SEGUNDO CUENTO COLECCIONABLE CON ESTILO DE AMOR PROPIO
       </span><br>
-      “Una melodía suave para volver a ti.”
+      “Cuento simbólico sobre la autoestima y el Árbol de la Vida, con un tono simbólico y sanador.”
       <span class="corazon-rojo">💛</span>
       <br><br>
 
-      <strong></strong><br>
-      <br>
-      <br><br>
+      <strong>PASO 1 – Abrir el pdf </strong><br>
+      Archivo → Descargar<<br>
+      Guarda esa copia en tu Google Drive.><br><br>
        
      ${enlaceHTML}
     `;
@@ -213,8 +211,8 @@ function abrirCaja() {
   if (!yaAbierta) {
     localStorage.setItem(CLAVE_CAJA, hoy);
     localStorage.setItem(CLAVE_PROGRESO, DIA_CAJA);
-    caja.src = "https://drive.google.com/thumbnail?id=1KbiZdr-7OfUyzbvKg52zSFEkQgdR2bB_&sz=w1000";
-  }
+    caja.src = "https://drive.google.com/thumbnail?id=19uCar5rybV0YHiX-P3NhGhsYXNmxJW4z&sz=w1000";
+    }
 
   // ✨ Animación mágica al mostrar el mensaje
   mensaje.style.opacity = 0;
