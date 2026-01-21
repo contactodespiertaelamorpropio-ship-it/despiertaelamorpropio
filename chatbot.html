@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Espacio de Luz - Chatbot de Amor Propio con IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #fef3f2 0%, #fae8ff 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .message {
+            max-width: 85%;
+            margin-bottom: 1rem;
+            padding: 0.8rem 1.2rem;
+            border-radius: 1.2rem;
+            line-height: 1.5;
+            animation: fadeIn 0.3s ease-out;
+            position: relative;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bot-message {
+            background-color: white;
+            color: #4a5568;
+            border-bottom-left-radius: 0.2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .user-message {
+            background-color: #d8b4fe;
+            color: #4c1d95;
+            align-self: flex-end;
+            margin-left: auto;
+            border-bottom-right-radius: 0.2rem;
+        }
+
+        .option-btn {
+            background-color: white;
+            border: 2px solid #f0abfc;
+            color: #a21caf;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            margin: 0.25rem;
+            transition: all 0.2s;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .option-btn:hover {
+            background-color: #f0abfc;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .input-area {
+            background: white;
+            padding: 1rem;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.03);
+        }
+
+        .loading-dots span {
+            animation: blink 1.4s infinite both;
+            height: 6px;
+            width: 6px;
+            background: #a21caf;
+            display: inline-block;
+            border-radius: 50%;
+            margin: 0 2px;
+        }
+        .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes blink {
+            0% { opacity: 0.2; }
+            20% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="bg-white/80 backdrop-blur-md p-4 flex items-center justify-between border-b border-pink-100 shrink-0">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-gradient-to-tr from-pink-300 to-purple-400 rounded-full flex items-center justify-center text-white text-xl">
+                ✨
+            </div>
+            <div>
+                <h1 class="font-bold text-gray-800">Tu Espacio de Luz</h1>
+                <p class="text-xs text-pink-500 font-medium italic">Ahora con Inteligencia Empática</p>
+            </div>
+        </div>
+    </header>
+
+    <main id="chat-container" class="chat-container flex flex-col">
+        <!-- Los mensajes aparecerán aquí -->
+    </main>
+
+    <div id="options-container" class="px-4 pb-2 flex flex-wrap justify-center shrink-0">
+        <!-- Los botones de opciones aparecerán aquí -->
+    </div>
+
+    <footer class="input-area shrink-0">
+        <div class="max-w-4xl mx-auto flex items-center space-x-2">
+            <input type="text" id="user-input" placeholder="Cuéntame algo o usa una herramienta ✨..." 
+                   class="flex-grow p-3 border border-pink-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-300 transition-all">
+            <button id="send-btn" class="bg-purple-500 text-white p-3 rounded-2xl hover:bg-purple-600 transition-colors shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
+            </button>
+        </div>
+    </footer>
+
+    <script>
+        const apiKey = ""; // La clave de API se inyecta automáticamente
+        const chatContainer = document.getElementById('chat-container');
+        const optionsContainer = document.getElementById('options-container');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+
+        const initialOptions = [
+            { text: "✨ Transformar pensamiento negativo", type: "reframe" },
+            { text: "🎯 Reto de amor propio hoy", type: "challenge" },
+            { text: "🌟 Afirmación personalizada", type: "affirmation" },
+            { text: "🧘 Meditación guiada rápida", type: "meditation" }
+        ];
+
+        // Función para llamar a Gemini con manejo de errores y reintentos
+        async function callGemini(textPrompt, systemInstruction = "Eres un coach de amor propio empático y amable. Tus respuestas deben ser cortas, cálidas y motivadoras.") {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            
+            const payload = {
+                contents: [{ parts: [{ text: textPrompt }] }],
+                systemInstruction: { parts: [{ text: systemInstruction }] }
+            };
+
+            let retries = 0;
+            const maxRetries = 5;
+            
+            while (retries < maxRetries) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    
+                    const data = await response.json();
+                    return data.candidates?.[0]?.content?.parts?.[0]?.text || "Lo siento, tuve un pequeño bloqueo emocional. ¿Puedes repetirlo?";
+                } catch (error) {
+                    retries++;
+                    const delay = Math.pow(2, retries) * 1000;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+            return "Parece que hay problemas de conexión. Respira profundo, estoy intentando reconectar.";
+        }
+
+        function addMessage(text, isUser = false) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            msgDiv.textContent = text;
+            chatContainer.appendChild(msgDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            return msgDiv;
+        }
+
+        function showLoading() {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'message bot-message loading-message';
+            msgDiv.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
+            chatContainer.appendChild(msgDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            return msgDiv;
+        }
+
+        function showOptions() {
+            optionsContainer.innerHTML = '';
+            initialOptions.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = opt.text;
+                btn.onclick = () => handleTool(opt.type);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        // Variable para controlar si estamos esperando una entrada específica (reframe)
+        let isWaitingForThought = false;
+
+        async function handleTool(type) {
+            if (type === "reframe") {
+                addMessage("Escribe ese pensamiento negativo que está rondando tu mente aquí abajo:");
+                isWaitingForThought = true;
+                userInput.placeholder = "Escribe tu pensamiento negativo aquí...";
+                userInput.focus();
+                return;
+            }
+
+            let textPrompt = "";
+            let loader;
+
+            if (type === "challenge") {
+                loader = showLoading();
+                textPrompt = "Genera un pequeño reto de amor propio para realizar hoy. Algo sencillo pero significativo.";
+                const response = await callGemini(textPrompt);
+                loader.remove();
+                addMessage("¡Tu reto de hoy! 🎯 " + response);
+            } else if (type === "affirmation") {
+                loader = showLoading();
+                textPrompt = "Genera una afirmación de amor propio poderosa y única para este momento.";
+                const response = await callGemini(textPrompt);
+                loader.remove();
+                addMessage("Repite conmigo: ✨ " + response);
+            } else if (type === "meditation") {
+                loader = showLoading();
+                textPrompt = "Escribe una guía de meditación de 3 pasos muy breves para calmar la mente y conectar con el corazón.";
+                const response = await callGemini(textPrompt);
+                loader.remove();
+                addMessage("Tómate un momento... 🧘\n" + response);
+            }
+            showOptions();
+        }
+
+        async function handleChat(text) {
+            addMessage(text, true);
+
+            // Caso especial: estamos procesando una transformación de pensamiento
+            if (isWaitingForThought) {
+                isWaitingForThought = false;
+                userInput.placeholder = "Cuéntame algo o usa una herramienta ✨...";
+                const loader = showLoading();
+                const textPrompt = `Tengo este pensamiento negativo: "${text}". Ayúdame a transformarlo en un pensamiento realista, amable y positivo de amor propio. Sé breve.`;
+                const response = await callGemini(textPrompt, "Eres un experto en terapia cognitiva conductual enfocado en amor propio. Ayudas a transformar pensamientos limitantes en empoderadores.");
+                loader.remove();
+                addMessage(response);
+                showOptions();
+                return;
+            }
+
+            // Chat normal
+            const loader = showLoading();
+            const response = await callGemini(text, "Eres un chatbot de amor propio. Responde con mucha empatía, valida los sentimientos del usuario y termina con una frase de apoyo inspiradora. Si el usuario está triste, sé especialmente cuidadoso y dulce.");
+            loader.remove();
+            addMessage(response);
+            showOptions();
+        }
+
+        sendBtn.onclick = () => {
+            const text = userInput.value.trim();
+            if (text) {
+                handleChat(text);
+                userInput.value = '';
+            }
+        };
+
+        userInput.onkeypress = (e) => {
+            if (e.key === 'Enter') sendBtn.click();
+        };
+
+        window.onload = () => {
+            setTimeout(() => {
+                addMessage("Hola de nuevo, alma hermosa. ✨ Ahora cuento con la chispa de la IA para acompañarte mejor. ¿Te gustaría transformar un pensamiento negativo o prefieres un reto para hoy?");
+                showOptions();
+            }, 500);
+        };
+    </script>
+</body>
+</html>
