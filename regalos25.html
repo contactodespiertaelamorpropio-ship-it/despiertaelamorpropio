@@ -160,6 +160,9 @@ if (localStorage.getItem(CLAVE_CAJA) === hoy) {
   mensaje.innerHTML = `
     <span class="icono-amarillo"><i class="fa-solid fa-moon"></i></span>
     Ya abriste tu regalo hoy.<br><br>
+    <a href="https://forms.gle/WAifp34ndZUrLXkw7" target="_blank" rel="noopener noreferrer">
+    ¡Haz clic aquí para completar el formulario!
+    </a><br><br>
     ${enlaceHTML}
   `;
   mensaje.style.display = "block";
@@ -175,7 +178,10 @@ function abrirCaja() {
   const contenidoHTML = yaAbierta
     ? `
       <span class="icono-amarillo"><i class="fa-solid fa-moon"></i></span>
-      Ya abriste tu regalo hoy.<br><br>
+      Ya abriste tu regalo hoy.<br><br
+      <a href="https://forms.gle/WAifp34ndZUrLXkw7" target="_blank" rel="noopener noreferrer">
+      ¡Haz clic aquí para completar el formulario!
+      </a><br><br>
       ${enlaceHTML}
     `
     : `
@@ -191,8 +197,10 @@ function abrirCaja() {
       <br><br>
 
       <strong>Abrir el gift </strong><br>
-      Archivo → Descargar<<br>
-      Guarda esa copia en tu Google Drive.><br><br>
+      Archivo → CODIGO DE DESCUENTO: DIOSA50<<br>
+      <a href="https://forms.gle/WAifp34ndZUrLXkw7" target="_blank" rel="noopener noreferrer">
+      ¡Haz clic aquí para completar el formulario!
+      </a><br><br>
        
      ${enlaceHTML}
     `;
