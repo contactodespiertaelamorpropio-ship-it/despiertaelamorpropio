@@ -158,7 +158,7 @@ if (localStorage.getItem(CLAVE_CAJA) === hoy) {
   
   mensaje.innerHTML = `
     <span class="icono-amarillo"><i class="fa-solid fa-moon"></i></span>
-    Ya abriste tu regalo hoy.<br><br>
+    Ya abriste tu premio hoy.<br><br>
     ${enlaceHTML}
   `;
   mensaje.style.display = "block";
@@ -174,7 +174,7 @@ function abrirCaja() {
   const contenidoHTML = yaAbierta
     ? `
       <span class="icono-amarillo"><i class="fa-solid fa-moon"></i></span>
-      Ya abriste tu regalo hoy.<br><br>
+      Ya abriste tu premio hoy.<br><br>
       ${enlaceHTML}
     `
     : `
@@ -183,12 +183,12 @@ function abrirCaja() {
       <span class="titulo-fucsia">
        🏆 GANA LA INSIGNIA "MERECEDORA"
       </span><br>
-      <strong> 🎯 Misión diaria: Escribe 7 cosas que mereces recibir.</strong>
+      <strong> 🎯 Misión: Escribe 7 cosas que mereces recibir.</strong>
 
       <span class="corazon-rojo">💛</span>
       <br><br>
       <strong>🎯 Completa la Misión.</strong><br>
-       <em>Escribir  en tu CUADERNO de amor propio de notas y reflexiones los resultados. </em><br>
+       <em>Escribe  en tu CUADERNO de amor propio de notas y reflexiones. </em><br>
        
       <br>PASO 1 – Abrir la imagen
       Archivo → Hacer una copia.
