@@ -143,7 +143,7 @@ const cajaBloqueada = DIA_CAJA !== 1 && ultimoDia < DIA_CAJA - 1;
 // 🔗 SOLO BOTÓN PARA ABRIR EN GOOGLE SLIDES
 const enlaceHTML = `
 <a
-  href="https://drive.google.com/file/d/1eJ8NkInm7IIwzON6BlqeQrlfntyR9Fa_/view?usp=sharing"............
+  href="https://drive.google.com/file/d/1HrSLFTGnhi2mmByLLusT4rAwBQPr7nTk/view?usp=drive_link"
   target="_blank"
   class="boton boton-animado"
 >
@@ -153,7 +153,7 @@ const enlaceHTML = `
 
 // AL CARGAR
 if (localStorage.getItem(CLAVE_CAJA) === hoy) {
-  caja.src = "https://drive.google.com/thumbnail?id=1xjhvZ9pM-q6BZmAu5mrENbRvir1-Y6mv&sz=w1000";..................
+  caja.src = "https://drive.google.com/thumbnail?id=1wukdTc3drnvaw-Kg-zRp6JyT61IraHzG&sz=w1000";
   textoInicial.style.display = "none";
   
   mensaje.innerHTML = `
@@ -216,7 +216,7 @@ function abrirCaja() {
   if (!yaAbierta) {
     localStorage.setItem(CLAVE_CAJA, hoy);
     localStorage.setItem(CLAVE_PROGRESO, DIA_CAJA);
-    caja.src = "https://drive.google.com/thumbnail?id=1xjhvZ9pM-q6BZmAu5mrENbRvir1-Y6mv&sz=w1000";............
+    caja.src = "https://drive.google.com/thumbnail?id=1wukdTc3drnvaw-Kg-zRp6JyT61IraHzG&sz=w1000";
   }
 
   // ✨ Animación mágica al mostrar el mensaje
