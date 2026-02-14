@@ -1,96 +1,96 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Checklist Página 1</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      font-size: 14px;
-    }
-    label {
-      font-weight: bold;
-      cursor: pointer;
-    }
-    input[type="checkbox"]:checked + label {
-      color: blue;
-      text-decoration: line-through;
-      font-weight: normal;
-    }
-    .lista-reto {
-    max-width: 500px;
-    font-family: Arial, sans-serif;
-    }
+<meta charset="UTF-8">
+<title>Checklist Página 1</title>
 
-   .item-reto {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 18px; /* separación entre puntos */
-    }
+<style>
+body {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
 
-   .item-reto input {
-    margin-right: 12px; /* espacio entre checkbox y texto */
-    margin-top: 4px;
-    }
+.lista-reto {
+  max-width: 500px;
+}
 
-   .item-reto label {
-    line-height: 1.5;
-    text-indent: 8px; /* pequeño tabulado */
-    }
- </style>
+.item-reto {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 18px; /* separación entre puntos */
+}
+
+.item-reto input {
+  margin-right: 12px; /* espacio checkbox-texto */
+  margin-top: 4px;
+}
+
+.item-reto label {
+  line-height: 1.5;
+  padding-left: 8px; /* mejor que text-indent */
+  font-weight: bold;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked + label {
+  color: blue;
+  text-decoration: line-through;
+  font-weight: normal;
+}
+</style>
 </head>
+
 <body>
-  
-  <!-- 🔧 Cambia libremente el texto y el id -->
-   <div class="lista-reto">
 
-   <div class="lista-reto">  
+<div class="lista-reto">
+
+  <div class="item-reto">
     <input type="checkbox" id="pregunta1">
-    <label for="pregunta1">Haz una lista de 5 rasgos<br/> únicos tuyos.</label>
+    <label for="pregunta1">Haz una lista de 5 <br/>rasgos únicos tuyos.</label>
   </div>
- 
-  <div class="lista-reto">
+
+  <div class="item-reto">
     <input type="checkbox" id="pregunta2">
-    <label for="pregunta2">Elige uno y celébralo con <br/>un gesto (música, <br/>comida, ritual).</label>
+    <label for="pregunta2">Elige uno y celébralo <br/>con un gesto (música, <br/>comida, ritual).</label>
   </div>
-  
-  <div class="lista-reto">
+
+  <div class="item-reto">
     <input type="checkbox" id="pregunta3">
-    <label for="pregunta3">Escribe una carta breve<br/>a ti misma agradeciendo <br/>tu autenticidad.</label>
+    <label for="pregunta3">Escribe una carta breve a ti misma<br/> agradeciendo tu autenticidad.</label>
   </div>
-  
-  <div class="lista-reto">
+
+  <div class="item-reto">
     <input type="checkbox" id="pregunta4">
-    <label for="pregunta4">Comparte un aspecto auténtico<br/> con alguien <br/>cercano.</label>
-  </div> 
-
-  <div class="lista-reto">
-    <input type="checkbox" id="pregunta5">
-    <label for="pregunta5">Repite: “Soy suficiente<br/> y única”.</label>
+    <label for="pregunta4">Comparte un aspecto auténtico<br/>con alguien cercano.</label>
   </div>
-  
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const checks = document.querySelectorAll('input[type="checkbox"]');
 
-      // 🔑 Prefijo único por página (cámbialo en cada archivo)
-      const pagePrefix = "pagina29";
+  <div class="item-reto">
+    <input type="checkbox" id="pregunta5">
+    <label for="pregunta5">Repite: “Soy suficiente <br/>y única”.</label>
+  </div>
 
-      checks.forEach(chk => {
-        const key = `${pagePrefix}_${chk.id}`;
+</div>
 
-        // Restaura estado guardado
-        const guardado = localStorage.getItem(key);
-        if (guardado !== null) {
-          chk.checked = guardado === "true";
-        }
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const checks = document.querySelectorAll('input[type="checkbox"]');
+  const pagePrefix = "pagina29";
 
-        // Guarda cambios
-        chk.addEventListener("change", () => {
-          localStorage.setItem(key, String(chk.checked));
-        });
-      });
+  checks.forEach(chk => {
+    const key = `${pagePrefix}_${chk.id}`;
+
+    const guardado = localStorage.getItem(key);
+    if (guardado !== null) {
+      chk.checked = guardado === "true";
+    }
+
+    chk.addEventListener("change", () => {
+      localStorage.setItem(key, String(chk.checked));
     });
-  </script>
+  });
+});
+</script>
+
 </body>
 </html>
+
