@@ -206,6 +206,13 @@
       counter.textContent =
         `Retos completados: ${count} / 30`;
     }
+      function resizeIframe() {
+      const height = document.body.scrollHeight;
+      window.parent.postMessage({ iframeHeight: height }, "*");
+   }
+
+  window.onload = resizeIframe;
+  window.onresize = resizeIframe;
   </script>
 
 </body>
