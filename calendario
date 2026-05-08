@@ -1,0 +1,124 @@
+<style>
+  body::-webkit-scrollbar { display: none; }
+  body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    margin: 0; 
+    padding: 10px; 
+    background-color: #ffffff;
+    overflow-x: hidden;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+  }
+
+  .day-card {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 8px;
+    min-height: 85px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  }
+
+  .day-card.completed {
+    background-color: #f0fdf4;
+    border-color: #4ade80;
+  }
+
+  .day-label { font-size: 12px; font-weight: bold; color: #444; }
+  .reto-badge { background-color: #e57373; color: white; font-size: 9px; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
+  input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-color: #4ade80; }
+
+  #counter { font-weight: bold; margin-bottom: 15px; color: #333; }
+
+  @media (max-width: 600px) {
+    .grid-container { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+
+<div id="counter"></div>
+<div class="grid-container" id="challenge-grid"></div>
+
+<script>
+  const grid = document.getElementById('challenge-grid');
+  const counter = document.getElementById('counter');
+
+  let completedCount = 0;
+
+  for (let i = 1; i <= 30; i++) {
+    const card = document.createElement('div');
+    card.className = 'day-card';
+    card.id = `card-${i}`;
+
+    // LEER ESTADO GUARDADO
+    const saved = localStorage.getItem(`reto-dia-${i}`);
+    let isDone = false;
+    let dateCompleted = null;
+
+    if (saved) {
+      const data = JSON.parse(saved);
+      isDone = data.done;
+      dateCompleted = data.date;
+    }
+
+    if (isDone) {
+      card.classList.add('completed');
+      completedCount++;
+    }
+
+    card.innerHTML = `
+      <span class="day-label">Día ${i}</span>
+      <div class="reto-badge">Reto</div>
+      <input type="checkbox"
+             ${isDone ? 'checked' : ''}
+             onchange="updateDay(${i}, this.checked)">
+      ${dateCompleted ? `<small style="color:#666;font-size:10px;">${dateCompleted}</small>` : ''}
+    `;
+
+    grid.appendChild(card);
+  }
+
+  // Mostrar contador inicial
+  counter.textContent = `Retos completados: ${completedCount} / 30`;
+
+  function updateDay(num, isChecked) {
+    const element = document.getElementById(`card-${num}`);
+
+    if (isChecked) {
+      const today = new Date().toLocaleDateString();
+      const data = { done: true, date: today };
+
+      localStorage.setItem(`reto-dia-${num}`, JSON.stringify(data));
+      element.classList.add('completed');
+
+      // Añadir fecha debajo del checkbox
+      element.querySelector('small')?.remove();
+      const dateLabel = document.createElement('small');
+      dateLabel.style.color = '#666';
+      dateLabel.style.fontSize = '10px';
+      dateLabel.textContent = today;
+      element.appendChild(dateLabel);
+
+    } else {
+      localStorage.removeItem(`reto-dia-${num}`);
+      element.classList.remove('completed');
+      element.querySelector('small')?.remove();
+    }
+
+    // Actualizar contador
+    let count = 0;
+    for (let i = 1; i <= 30; i++) {
+      if (localStorage.getItem(`reto-dia-${i}`)) count++;
+    }
+    counter.textContent = `Retos completados: ${count} / 30`;
+  }
+</script>
