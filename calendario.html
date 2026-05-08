@@ -76,19 +76,31 @@
     @media (max-width: 600px) {
       .grid-container {
         grid-template-columns: repeat(2, 1fr);
-      }
-  html, body {
-    overflow-y: auto;
-    overflow-x: hidden;
+      } 
+    }
 
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
+      /* OCULTAR SCROLL */
+ 
+  html,
+  body {
+  width: 100%;
+  height: auto;
+  overflow: hidden !important;
+  margin: 0;
+  padding: 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+    
   html::-webkit-scrollbar,
-  body::-webkit-scrollbar {
+  body::-webkit-scrollbar,
+  .grid-container::-webkit-scrollbar {
     display: none;
   }
+
+.grid-container {
+  overflow: hidden !important;
+}    
     
     }
   </style>
